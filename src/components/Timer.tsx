@@ -16,13 +16,16 @@ const Timer = () => {
   const [seconds, setSeconds] = useState(4);
   const [rounds, setRounds] = useState(3);
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
+  const [isRunning, setIsRunning] = useState<boolean>(false);
 
   useEffect(() => {
     let interval = setInterval(() => {
       clearInterval(interval);
-      handleSeconds()
+      if (isRunning) {
+        handleSeconds()
+      }
     }, 1000);
-  }, [seconds]);
+  }, [seconds, isRunning]);
 
 
   const handleMinutes = () => {
@@ -86,6 +89,14 @@ const Timer = () => {
     }
   }
 
+  const reset = () => {
+    setIsRunning(false);
+    setMinutes(0);
+    setSeconds(3);
+    setRounds(3);
+    setTimerType(TIMER_TYPE.WORK);
+  }
+
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
@@ -97,6 +108,13 @@ const Timer = () => {
         {timerMinutes}:{timerSeconds}
       </div>
       <div>{timerType && <div>Type: {timerType}</div>}</div>
+
+      {isRunning ?
+        <button onClick={() => setIsRunning(false)}>Pause</button>
+        :
+        <button onClick={() => setIsRunning(true)}>Play</button>
+      }
+      <button onClick={reset}>Reset</button>
     </div>
   );
 };
