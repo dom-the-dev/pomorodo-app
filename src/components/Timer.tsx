@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 
-// const WORK_TIME = 0;
-// const SHORT_BREAK_TIME = 5;
-// const LONG_BREAK_TIME = 25;
-// const SECONDS = 10;
+const WORK_TIME = 1;
+const SHORT_BREAK_TIME = 5;
+const LONG_BREAK_TIME = 25;
 
 enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
@@ -12,8 +11,8 @@ enum TIMER_TYPE {
 }
 
 const Timer = () => {
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(4);
+  const [minutes, setMinutes] = useState(WORK_TIME);
+  const [seconds, setSeconds] = useState(0);
   const [rounds, setRounds] = useState(3);
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
   const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -75,24 +74,22 @@ const Timer = () => {
 
   const resetTimer = (timerType: TIMER_TYPE) => {
     if (timerType === TIMER_TYPE.WORK) {
-      setMinutes(0);
-      setSeconds(3); // set this to 59
+      setMinutes(WORK_TIME - 1);
     }
 
     if (timerType === TIMER_TYPE.SHORT_BREAK) {
-      setMinutes(0);
-      setSeconds(4); // set this to 59
+      setMinutes(SHORT_BREAK_TIME - 1);
     }
     if (timerType === TIMER_TYPE.LONG_BREAK) {
-      setSeconds(8); // set this to 59
-      setMinutes(0);
+      setMinutes(LONG_BREAK_TIME - 1);
     }
+      setSeconds(59);
   }
 
   const reset = () => {
     setIsRunning(false);
-    setMinutes(0);
-    setSeconds(3);
+    setMinutes(WORK_TIME);
+    setSeconds(0);
     setRounds(3);
     setTimerType(TIMER_TYPE.WORK);
   }
