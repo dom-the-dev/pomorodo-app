@@ -1,10 +1,8 @@
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Tab1.css';
-import {FC, useState} from "react";
+import {FC} from "react";
 import Timer from "../components/Timer";
 
-const Tab1: FC = () => {
+const Pomodoro: FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -26,4 +24,4 @@ const Tab1: FC = () => {
   );
 };
 
-export default Tab1;
+export default Pomodoro;
