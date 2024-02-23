@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 import {settingsOutline,stopwatchOutline} from 'ionicons/icons';
-import Pomodoro from './pages/Pomodoro';
+import TomoDoro from './pages/TomoDoro';
 import Settings from './pages/Settings';
 
 /* Core CSS required for Ionic components to work properly */
@@ -43,20 +43,17 @@ const App: FC = () => (
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/pomodoro">
-              <Pomodoro/>
+            <Route exact path="/">
+              <TomoDoro/>
             </Route>
             <Route exact path="/settings">
               <Settings/>
             </Route>
-            <Route exact path="/">
-              <Redirect to="/pomodoro"/>
-            </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="pomodoro" href="/pomodoro">
+            <IonTabButton tab="TomoDoro" href="/">
               <IonIcon aria-hidden="true" icon={stopwatchOutline}/>
-              <IonLabel>Pomodoro</IonLabel>
+              <IonLabel>TomoDoro</IonLabel>
             </IonTabButton>
             <IonTabButton tab="settings" href="/settings">
               <IonIcon aria-hidden="true" icon={settingsOutline}/>

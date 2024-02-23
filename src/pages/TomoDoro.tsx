@@ -2,12 +2,12 @@ import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react
 import {FC} from "react";
 import Timer from "../components/Timer";
 
-const Pomodoro: FC = () => {
+const TomoDoro: FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Pomodoro App</IonTitle>
+          <IonTitle>TomoDoro App</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -17,4 +17,4 @@ const Pomodoro: FC = () => {
   );
 };
 
-export default Pomodoro;
+export default TomoDoro;

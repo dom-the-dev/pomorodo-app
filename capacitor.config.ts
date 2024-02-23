@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'Pomodoro',
+  appName: 'TomoDoro',
   webDir: 'dist',
   server: {
     androidScheme: 'https'
