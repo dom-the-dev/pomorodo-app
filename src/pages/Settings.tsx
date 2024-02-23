@@ -25,7 +25,7 @@ const Settings: FC = () => {
           <IonRow>
             <IonCol>
               Work Time: {workTime} Minutes <br/>
-              <IonRange ticks={true} snaps={true} step={5} min={5} max={60} pin={true}
+              <IonRange value={workTime} snaps={true} step={5} min={5} max={60} pin={true}
                         pinFormatter={(value: number) => `${value} Min.`}
                         onIonChange={(e) => setWorkTime(e.detail.value as number)}/>
             </IonCol>
@@ -34,7 +34,7 @@ const Settings: FC = () => {
           <IonRow>
             <IonCol>
               Short Break Time: {shortBreakTime} Minutes <br/>
-              <IonRange pin={true} snaps={true} step={5} min={5} max={30}
+              <IonRange value={shortBreakTime} pin={true} snaps={true} step={5} min={5} max={30}
                         pinFormatter={(value: number) => `${value} Min.`}
                         onIonChange={(e) => setShortBreakTime(e.detail.value as number)}/>
             </IonCol>
@@ -42,7 +42,7 @@ const Settings: FC = () => {
           <IonRow>
             <IonCol>
               Long Break Time: {longBreakTime} Minutes <br/>
-              <IonRange pin={true} snaps={true} step={5} min={5} max={60}
+              <IonRange value={longBreakTime} ticks={true} pin={true} snaps={true} step={5} min={5} max={60}
                         pinFormatter={(value: number) => `${value} Min.`}
                         onIonChange={(e) => setLongBreakTime(e.detail.value as number)}/>
             </IonCol>
@@ -50,7 +50,7 @@ const Settings: FC = () => {
           <IonRow>
             <IonCol>
               Rounds: {rounds}
-              <IonRange pin={true} snaps={true} step={1} min={1} max={10}
+              <IonRange value={rounds} pin={true} snaps={true} step={1} min={1} max={10}
                         pinFormatter={(value: number) => `${value} Rounds`}
                         onIonChange={(e) => setRounds(e.detail.value as number)}/>
             </IonCol>
