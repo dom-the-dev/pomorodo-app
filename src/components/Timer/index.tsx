@@ -33,7 +33,7 @@ const Timer = () => {
       }
     };
 
-    let interval;
+    let interval: NodeJS.Timeout;
     if (isRunning) {
       interval = setInterval(handleTimerExpiration, 1000);
     }
