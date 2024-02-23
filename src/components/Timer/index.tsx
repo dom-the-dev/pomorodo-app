@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import BackgroundColorLoader, {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
 import SettingsContext from "../../context/Settings.context";
+import {IonButton} from "@ionic/react";
 
 
 enum TIMER_TYPE {
@@ -137,11 +138,11 @@ const Timer = () => {
       <div>{timerType && <div>Type: {timerType}</div>}</div>
 
       {isRunning ?
-        <button onClick={() => setIsRunning(false)}>Pause</button>
+        <IonButton color="secondary" onClick={() => setIsRunning(false)}>Pause</IonButton>
         :
-        <button onClick={() => setIsRunning(true)}>Play</button>
+        <IonButton color="secondary" onClick={() => setIsRunning(true)}>Play</IonButton>
       }
-      <button onClick={reset}>Reset</button>
+        <IonButton color="secondary" onClick={reset}>Reset</IonButton>
     </BackgroundColorLoader>
   );
 };
