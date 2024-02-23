@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {ellipse, square, triangle} from 'ionicons/icons';
+import {settingsOutline,stopwatchOutline} from 'ionicons/icons';
 import Pomodoro from './pages/Pomodoro';
 import Settings from './pages/Settings';
 
@@ -55,11 +55,11 @@ const App: FC = () => (
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="pomodoro" href="/pomodoro">
-              <IonIcon aria-hidden="true" icon={triangle}/>
+              <IonIcon aria-hidden="true" icon={stopwatchOutline}/>
               <IonLabel>Pomodoro</IonLabel>
             </IonTabButton>
             <IonTabButton tab="settings" href="/settings">
-              <IonIcon aria-hidden="true" icon={ellipse}/>
+              <IonIcon aria-hidden="true" icon={settingsOutline}/>
               <IonLabel>Settings</IonLabel>
             </IonTabButton>
           </IonTabBar>
