@@ -118,7 +118,7 @@ const Timer = () => {
 
   return (
     <div className={styles.wrapper}>
-      <SettingsModal isOpen={settingsModalIsOpen} />
+      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{timerType}</h1>
 
       <div className={styles.timeWrapper}>

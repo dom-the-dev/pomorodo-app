@@ -1,5 +1,7 @@
-import React, {FC, useContext} from 'react';
+import React, {Dispatch, FC, SetStateAction, useContext} from 'react';
 import {
+  IonButton,
+  IonButtons,
   IonCol,
   IonContent,
   IonGrid,
@@ -13,7 +15,7 @@ import {
 } from "@ionic/react";
 import SettingsContext from "../../context/Settings.context";
 
-const SettingsModal: FC<{isOpen: boolean}> = ({isOpen}) => {
+const SettingsModal: FC<{ isOpen: boolean, setIsOpen: Dispatch<SetStateAction<boolean>> }> = ({isOpen, setIsOpen}) => {
   const {
     rounds,
     setRounds,
@@ -31,10 +33,13 @@ const SettingsModal: FC<{isOpen: boolean}> = ({isOpen}) => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Settings</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent>
-        <IonGrid fixed>
+      <IonContent className="ion-padding">
+        <IonGrid>
           <IonRow>
             <IonCol>
               Work Time: {workTime} Minutes <br/>
@@ -43,7 +48,6 @@ const SettingsModal: FC<{isOpen: boolean}> = ({isOpen}) => {
                         onIonChange={(e) => setWorkTime(e.detail.value as number)}/>
             </IonCol>
           </IonRow>
-
           <IonRow>
             <IonCol>
               Short Break Time: {shortBreakTime} Minutes <br/>
@@ -69,11 +73,14 @@ const SettingsModal: FC<{isOpen: boolean}> = ({isOpen}) => {
             </IonCol>
           </IonRow>
           <IonRow>
-            <IonToggle onIonChange={() => setDarkMode(!darkMode)} checked={darkMode}>Dark Mode</IonToggle>
+            <IonCol>
+              <IonToggle disabled onIonChange={() => setDarkMode(!darkMode)} checked={darkMode}>Dark Mode</IonToggle>
+            </IonCol>
           </IonRow>
         </IonGrid>
       </IonContent>
-</IonModal>
+    </IonModal>
+
   );
 };
 
