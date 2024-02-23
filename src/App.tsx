@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -9,8 +9,8 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import {IonReactRouter} from '@ionic/react-router';
+import {ellipse, square, triangle} from 'ionicons/icons';
 import Pomodoro from './pages/Pomodoro';
 import Settings from './pages/Settings';
 
@@ -32,36 +32,40 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import {FC} from "react";
+import SettingsContextProvider from "./provider/SettingsContextProvider.provider";
 
 setupIonicReact();
 
-const App: React.FC = () => (
+const App: FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          <Route exact path="/pomodoro">
-            <Pomodoro />
-          </Route>
-          <Route exact path="/settings">
-            <Settings />
-          </Route>
-          <Route exact path="/">
-            <Redirect to="/pomodoro" />
-          </Route>
-        </IonRouterOutlet>
-        <IonTabBar slot="bottom">
-          <IonTabButton tab="pomodoro" href="/pomodoro">
-            <IonIcon aria-hidden="true" icon={triangle} />
-            <IonLabel>Pomodoro</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab="settings" href="/settings">
-            <IonIcon aria-hidden="true" icon={ellipse} />
-            <IonLabel>Settings</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
+    <SettingsContextProvider>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path="/pomodoro">
+              <Pomodoro/>
+            </Route>
+            <Route exact path="/settings">
+              <Settings/>
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/pomodoro"/>
+            </Route>
+          </IonRouterOutlet>
+          <IonTabBar slot="bottom">
+            <IonTabButton tab="pomodoro" href="/pomodoro">
+              <IonIcon aria-hidden="true" icon={triangle}/>
+              <IonLabel>Pomodoro</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab="settings" href="/settings">
+              <IonIcon aria-hidden="true" icon={ellipse}/>
+              <IonLabel>Settings</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </SettingsContextProvider>
   </IonApp>
 );
 

@@ -14,19 +14,19 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 0;
+    height: 100%;
     transition: height 1s;
 
     &.BLUE {
-      background-color: blue;
+      background-color: var(--ion-color-secondary-shade);
     }
 
     &.RED {
-      background-color: red;
+      background-color: var(--ion-color-danger);
     }
 
     &.VIOLET {
-      background-color: violet;
+      background-color: var(--ion-color-warning);
     }
   }
 }
