@@ -132,14 +132,15 @@ const Timer = () => {
 
       <div>Rounds left: {roundsLeft}</div>
       <div className={styles.buttons}>
-        <IonButton shape={'round'} color="secondary" onClick={() => setIsRunning(!isRunning)}>
+        <IonButton shape={'round'} color="primary" onClick={() => setIsRunning(!isRunning)}>
           {isRunning
             ? <IonIcon aria-hidden="true" icon={pauseOutline}/>
             : <IonIcon aria-hidden="true" icon={playOutline}/>
           }
         </IonButton>
-        <IonButton shape={'round'} color="secondary" onClick={reset}>Reset<IonIcon aria-hidden="true"
-                                                                                   icon={refreshOutline}/></IonButton>
+        <IonButton shape={'round'} color="secondary" onClick={reset}>
+          <IonIcon aria-hidden="true" icon={refreshOutline}/>
+        </IonButton>
       </div>
     </div>
   );

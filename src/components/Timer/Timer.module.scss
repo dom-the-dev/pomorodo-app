@@ -1,9 +1,15 @@
 .wrapper {
+  border: 1px solid var(--ion-color-primary);
+  height: 100%;
   text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
   .timeWrapper {
     position: relative;
-    height: 300px;
+    height: 280px;
 
     .time,
     .circle {

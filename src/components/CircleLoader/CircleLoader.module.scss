@@ -4,7 +4,7 @@
   stroke-dashoffset: 0;
   stroke-linecap: round;
   stroke-width: 10px;
-  stroke: var(--ion-color-light-tint);
+  stroke: var(--ion-color-medium-shade);
   fill: none;
   transition: stroke-dashoffset .1s linear;
   transform: rotate(-90deg);
@@ -13,5 +13,5 @@
 
 
 .circle {
-  stroke: var(--ion-color-medium-shade);
+  stroke: var(--ion-color-dark-shade);
 }
