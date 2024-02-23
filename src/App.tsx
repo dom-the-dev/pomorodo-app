@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {settingsOutline,stopwatchOutline} from 'ionicons/icons';
+import {settingsOutline, stopwatchOutline} from 'ionicons/icons';
 import TomoDoro from './pages/TomoDoro';
 import Settings from './pages/Settings';
 
@@ -34,6 +34,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import {FC} from "react";
 import SettingsContextProvider from "./provider/SettingsContextProvider.provider";
+import {Redirect} from "react-router";
 
 setupIonicReact();
 
@@ -51,7 +52,7 @@ const App: FC = () => (
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="TomoDoro" href="/">
+            <IonTabButton tab="tomodoro" href="/">
               <IonIcon aria-hidden="true" icon={stopwatchOutline}/>
               <IonLabel>TomoDoro</IonLabel>
             </IonTabButton>

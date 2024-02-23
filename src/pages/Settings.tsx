@@ -1,4 +1,4 @@
-import {IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRange, IonRow, IonTitle, IonToolbar} from '@ionic/react';
+import {IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRange, IonRow, IonTitle, IonToggle, IonToolbar} from '@ionic/react';
 import {FC, useContext} from "react";
 import SettingsContext from "../context/Settings.context";
 
@@ -11,7 +11,9 @@ const Settings: FC = () => {
     longBreakTime,
     setLongBreakTime,
     shortBreakTime,
-    setShortBreakTime
+    setShortBreakTime,
+    darkMode,
+    setDarkMode
   } = useContext(SettingsContext)
   return (
     <IonPage>
@@ -54,6 +56,9 @@ const Settings: FC = () => {
                         pinFormatter={(value: number) => `${value} Rounds`}
                         onIonChange={(e) => setRounds(e.detail.value as number)}/>
             </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonToggle onIonChange={() => setDarkMode(!darkMode)} checked={darkMode}>Dark Mode</IonToggle>
           </IonRow>
         </IonGrid>
       </IonContent>

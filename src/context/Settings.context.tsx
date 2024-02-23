@@ -10,6 +10,8 @@ const SettingsContext = createContext<{
   setShortBreakTime: Dispatch<SetStateAction<number>>
   longBreakTime: number;
   setLongBreakTime:  Dispatch<SetStateAction<number>>
+  darkMode: boolean;
+  setDarkMode:  Dispatch<SetStateAction<boolean>>
 }>({
   rounds: 3,
   setRounds: null,
@@ -18,7 +20,9 @@ const SettingsContext = createContext<{
   shortBreakTime: 5,
   setShortBreakTime: null,
   longBreakTime: 30,
-  setLongBreakTime: null
+  setLongBreakTime: null,
+  darkMode: false,
+  setDarkMode:  null
 });
 
 export default SettingsContext;
