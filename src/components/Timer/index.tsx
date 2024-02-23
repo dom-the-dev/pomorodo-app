@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
-import BackgroundColorLoader, {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
+import React, { useContext, useEffect, useState } from 'react';
+import BackgroundColorLoader, { TIMER_BACKGROUND_COLOR } from "../BackgroundColorLoader";
 import SettingsContext from "../../context/Settings.context";
-import {IonButton} from "@ionic/react";
-
+import { IonButton } from "@ionic/react";
 
 enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
@@ -11,139 +10,107 @@ enum TIMER_TYPE {
 }
 
 const Timer = () => {
-  const {workTime, shortBreakTime, longBreakTime, rounds} = useContext(SettingsContext);
+  const { workTime, shortBreakTime, longBreakTime, rounds } = useContext(SettingsContext);
   const [minutes, setMinutes] = useState(workTime);
   const [seconds, setSeconds] = useState(0);
   const [roundsLeft, setRoundsLeft] = useState(rounds);
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [progress, setProgress] = useState(0)
+  const [isRunning, setIsRunning] = useState(false);
+  const [progress, setProgress] = useState(0);
 
+  // Consolidated useEffect for timer logic
   useEffect(() => {
-    let interval = setInterval(() => {
-      clearInterval(interval);
-      if (isRunning) {
-        handleSeconds()
+    const handleTimerExpiration = () => {
+      if (seconds === 0) {
+        if (minutes === 0) {
+          updateRoundsAndTimerType();
+        } else {
+          setMinutes(minutes - 1);
+          setSeconds(59);
+        }
+      } else {
+        setSeconds(seconds - 1);
       }
-    }, 1000);
-  }, [seconds, isRunning]);
+    };
 
+    let interval;
+    if (isRunning) {
+      interval = setInterval(handleTimerExpiration, 1000);
+    }
+
+    return () => clearInterval(interval); // Clear interval on component unmount or when isRunning changes
+  }, [isRunning, seconds, minutes]);
+
+  // UseEffect for reset when settings change, kept as is but can add logic here as needed.
   useEffect(() => {
     reset();
   }, [workTime, shortBreakTime, longBreakTime, rounds]);
 
+  const updateRoundsAndTimerType = () => {
+    let nextType = timerType;
+    let nextRoundsLeft = roundsLeft;
 
-  const handleMinutes = () => {
-    if (minutes !== 0) {
-      setSeconds(59);
-      setMinutes(minutes - 1);
-    } else {
-      handleRounds()
-    }
-  }
-
-  const handleRounds = () => {
-    let thisRounds = roundsLeft
-    if (thisRounds !== 0 && timerType === TIMER_TYPE.SHORT_BREAK) {
-      setRoundsLeft(thisRounds - 1)
-    }
-
-    if (thisRounds !== 0 && timerType !== TIMER_TYPE.LONG_BREAK) {
-      handleTimer(thisRounds);
-    }
-  }
-
-  const handleTimer = (rounds: number) => {
-    let thisTimerType = timerType;
-
-    if (rounds > 1) {
-      if (thisTimerType === TIMER_TYPE.WORK) {
-        thisTimerType = TIMER_TYPE.SHORT_BREAK;
-      } else if (thisTimerType === TIMER_TYPE.SHORT_BREAK) {
-        thisTimerType = TIMER_TYPE.WORK;
-      }
-    } else {
-      thisTimerType = TIMER_TYPE.LONG_BREAK;
+    switch (timerType) {
+      case TIMER_TYPE.WORK:
+        nextType = roundsLeft > 1 ? TIMER_TYPE.SHORT_BREAK : TIMER_TYPE.LONG_BREAK;
+        break;
+      case TIMER_TYPE.SHORT_BREAK:
+        nextType = TIMER_TYPE.WORK;
+        nextRoundsLeft -= 1;
+        break;
+      case TIMER_TYPE.LONG_BREAK:
+        nextRoundsLeft -= 1;
+        break;
     }
 
-    setTimerType(thisTimerType);
-    resetTimer(thisTimerType);
-  }
+    setTimerType(nextType);
+    setRoundsLeft(nextRoundsLeft);
+    resetTimer(nextType);
+  };
 
-  const handleSeconds = () => {
-    if (seconds === 0) {
-      handleMinutes();
-    } else {
-      setSeconds(seconds - 1);
+  const resetTimer = (type:TIMER_TYPE) => {
+    switch (type) {
+      case TIMER_TYPE.WORK: setMinutes(workTime); break;
+      case TIMER_TYPE.SHORT_BREAK: setMinutes(shortBreakTime); break;
+      case TIMER_TYPE.LONG_BREAK: setMinutes(longBreakTime); break;
     }
-  }
-
-  const resetTimer = (timerType: TIMER_TYPE) => {
-    if (timerType === TIMER_TYPE.WORK) {
-      setMinutes(workTime - 1);
-    }
-
-    if (timerType === TIMER_TYPE.SHORT_BREAK) {
-      setMinutes(shortBreakTime - 1);
-    }
-    if (timerType === TIMER_TYPE.LONG_BREAK) {
-      setMinutes(longBreakTime - 1);
-    }
-    setSeconds(59);
-  }
+    setSeconds(0);
+  };
 
   const reset = () => {
     setIsRunning(false);
-    setMinutes(workTime);
-    setSeconds(0);
-    setRoundsLeft(rounds);
     setTimerType(TIMER_TYPE.WORK);
-  }
+    setRoundsLeft(rounds);
+    resetTimer(TIMER_TYPE.WORK);
+  };
 
   useEffect(() => {
-    setProgress(getProgress)
-  }, [seconds]);
-
-  const getProgress = () => {
-    let time = 0;
-    switch (timerType) {
-      case TIMER_TYPE.WORK: time = workTime; break;
-      case TIMER_TYPE.SHORT_BREAK: time = shortBreakTime; break;
-      case TIMER_TYPE.LONG_BREAK: time = longBreakTime; break;
-      default: time = workTime;
-    }
-
-    let timeInSeconds = time * 60 // 100%
-    return (100 / timeInSeconds) * (minutes * 60 + seconds)
-  }
+    const totalTimeInSeconds = (timerType === TIMER_TYPE.WORK ? workTime : timerType === TIMER_TYPE.SHORT_BREAK ? shortBreakTime : longBreakTime) * 60;
+    setProgress((100 / totalTimeInSeconds) * (minutes * 60 + seconds));
+  }, [seconds, minutes, timerType, workTime, shortBreakTime, longBreakTime]);
 
   const getTimerColor = () => {
     switch (timerType) {
-      case TIMER_TYPE.WORK: return TIMER_BACKGROUND_COLOR.RED
-      case TIMER_TYPE.SHORT_BREAK: return TIMER_BACKGROUND_COLOR.VIOLET
-      case TIMER_TYPE.LONG_BREAK: return TIMER_BACKGROUND_COLOR.BLUE
+      case TIMER_TYPE.WORK: return TIMER_BACKGROUND_COLOR.RED;
+      case TIMER_TYPE.SHORT_BREAK: return TIMER_BACKGROUND_COLOR.VIOLET;
+      case TIMER_TYPE.LONG_BREAK: return TIMER_BACKGROUND_COLOR.BLUE;
+      default: return TIMER_BACKGROUND_COLOR.RED;
     }
-  }
+  };
 
-  const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
+  const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
   return (
-    <BackgroundColorLoader backgroundColor={getTimerColor()} progress={progress}>
-      <div>Rounds left: {roundsLeft}</div>
-      {/*<div>Runden übrig: {rounds}</div>*/}
-      <div>
-        {timerMinutes}:{timerSeconds}
-      </div>
-      <div>{timerType && <div>Type: {timerType}</div>}</div>
-
-      {isRunning ?
-        <IonButton color="secondary" onClick={() => setIsRunning(false)}>Pause</IonButton>
-        :
-        <IonButton color="secondary" onClick={() => setIsRunning(true)}>Play</IonButton>
-      }
+      <BackgroundColorLoader backgroundColor={getTimerColor()} progress={progress}>
+        <div>Rounds left: {roundsLeft}</div>
+        <div>{timerMinutes}:{timerSeconds}</div>
+        <div>Type: {timerType}</div>
+        <IonButton color="secondary" onClick={() => setIsRunning(!isRunning)}>
+          {isRunning ? 'Pause' : 'Play'}
+        </IonButton>
         <IonButton color="secondary" onClick={reset}>Reset</IonButton>
-    </BackgroundColorLoader>
+      </BackgroundColorLoader>
   );
 };
 
