@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {settingsOutline, stopwatchOutline} from 'ionicons/icons';
+import {informationCircleOutline, settingsOutline, stopwatchOutline} from 'ionicons/icons';
 import TomoDoro from './pages/TomoDoro';
 import InfoPage from './pages/InfoPage';
 
@@ -60,7 +60,7 @@ const App: FC = () => (
               <IonLabel>TomoDoro</IonLabel>
             </IonTabButton>
             <IonTabButton tab="info" href="/info">
-              <IonIcon aria-hidden="true" icon={settingsOutline}/>
+              <IonIcon aria-hidden="true" icon={informationCircleOutline}/>
               <IonLabel>Info</IonLabel>
             </IonTabButton>
           </IonTabBar>
