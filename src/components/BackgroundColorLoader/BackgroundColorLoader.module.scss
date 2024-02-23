@@ -1,0 +1,32 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+
+  .progress {
+    z-index: -1;
+    background-color: blue;
+    pointer-events: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 0;
+    transition: height 1s;
+
+    &.BLUE {
+      background-color: blue;
+    }
+
+    &.RED {
+      background-color: red;
+    }
+
+    &.VIOLET {
+      background-color: violet;
+    }
+  }
+}
