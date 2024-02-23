@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import BackgroundColorLoader, {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
 import SettingsContext from "../../context/Settings.context";
-import {IonButton, IonCol, IonGrid, IonIcon, IonRow} from "@ionic/react";
+import {IonButton, IonCol, IonGrid, IonIcon, IonRow, IonToast} from "@ionic/react";
 import {pauseOutline, playOutline, refreshOutline, settingsOutline} from "ionicons/icons";
 import CircleLoader from "../CircleLoader";
 import styles from './Timer.module.scss';
@@ -15,6 +15,7 @@ enum TIMER_TYPE {
 
 const Timer = () => {
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
+  const [isOpenSettingsToast, setIsOpenSettingsToast] = useState<boolean>(false)
   const {workTime, shortBreakTime, longBreakTime, rounds} = useContext(SettingsContext);
   const [minutes, setMinutes] = useState(workTime);
   const [seconds, setSeconds] = useState(0);
@@ -144,9 +145,25 @@ const Timer = () => {
             : <IonIcon aria-hidden="true" icon={playOutline}/>
           }
         </IonButton>
-        <IonButton color="secondary" onClick={() => setSettingsModalIsOpen(!settingsModalIsOpen)}>
+
+        <IonButton color="secondary" onClick={() => isRunning ? setIsOpenSettingsToast(true) : setSettingsModalIsOpen(!settingsModalIsOpen)}>
           <IonIcon aria-hidden="true" icon={settingsOutline}/>
         </IonButton>
+
+        <IonToast
+          position="top"
+          isOpen={isOpenSettingsToast}
+          message="Tomodoro is running. Reset to change settings"
+          onDidDismiss={() => setIsOpenSettingsToast(false)}
+          duration={5000}
+          color={"warning"}
+          buttons={[
+            {
+              text: 'Dismiss',
+              role: 'cancel',
+            },
+          ]}
+        ></IonToast>
 
       </div>
     </div>
