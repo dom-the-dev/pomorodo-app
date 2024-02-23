@@ -1,0 +1,17 @@
+.circle,
+.progress {
+  stroke-dasharray: 0;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  stroke-width: 10px;
+  stroke: var(--ion-color-light-tint);
+  fill: none;
+  transition: stroke-dashoffset .1s linear;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+
+.circle {
+  stroke: var(--ion-color-medium-shade);
+}
