@@ -9,7 +9,7 @@ const TomoDoro: FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>TomoDoro App</IonTitle>
+          <IonTitle>TomoDoro</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
