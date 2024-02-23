@@ -12,7 +12,7 @@ import {
 import {IonReactRouter} from '@ionic/react-router';
 import {settingsOutline, stopwatchOutline} from 'ionicons/icons';
 import TomoDoro from './pages/TomoDoro';
-import Settings from './pages/Settings';
+import InfoPage from './pages/InfoPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -44,21 +44,24 @@ const App: FC = () => (
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route exact path="/">
+            <Route exact path="/timer">
               <TomoDoro/>
             </Route>
-            <Route exact path="/settings">
-              <Settings/>
+            <Route exact path="/info">
+              <InfoPage/>
+            </Route>
+            <Route exact path="/">
+              <Redirect to={'/timer'} />
             </Route>
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
-            <IonTabButton tab="tomodoro" href="/">
+            <IonTabButton tab="timer" href="/timer">
               <IonIcon aria-hidden="true" icon={stopwatchOutline}/>
               <IonLabel>TomoDoro</IonLabel>
             </IonTabButton>
-            <IonTabButton tab="settings" href="/settings">
+            <IonTabButton tab="info" href="/info">
               <IonIcon aria-hidden="true" icon={settingsOutline}/>
-              <IonLabel>Settings</IonLabel>
+              <IonLabel>Info</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>

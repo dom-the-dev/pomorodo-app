@@ -1,8 +1,19 @@
-import {IonCol, IonContent, IonGrid, IonHeader, IonPage, IonRange, IonRow, IonTitle, IonToggle, IonToolbar} from '@ionic/react';
-import {FC, useContext} from "react";
-import SettingsContext from "../context/Settings.context";
+import React, {FC, useContext} from 'react';
+import {
+  IonCol,
+  IonContent,
+  IonGrid,
+  IonHeader,
+  IonModal,
+  IonRange,
+  IonRow,
+  IonTitle,
+  IonToggle,
+  IonToolbar
+} from "@ionic/react";
+import SettingsContext from "../../context/Settings.context";
 
-const Settings: FC = () => {
+const SettingsModal: FC<{isOpen: boolean}> = ({isOpen}) => {
   const {
     rounds,
     setRounds,
@@ -16,13 +27,13 @@ const Settings: FC = () => {
     setDarkMode
   } = useContext(SettingsContext)
   return (
-    <IonPage>
+    <IonModal isOpen={isOpen}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Settings</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
+      <IonContent>
         <IonGrid fixed>
           <IonRow>
             <IonCol>
@@ -62,8 +73,8 @@ const Settings: FC = () => {
           </IonRow>
         </IonGrid>
       </IonContent>
-    </IonPage>
+</IonModal>
   );
 };
 
-export default Settings;
+export default SettingsModal;

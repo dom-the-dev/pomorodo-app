@@ -2,9 +2,10 @@ import React, {useContext, useEffect, useState} from 'react';
 import BackgroundColorLoader, {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
 import SettingsContext from "../../context/Settings.context";
 import {IonButton, IonCol, IonGrid, IonIcon, IonRow} from "@ionic/react";
-import {pauseOutline, playOutline, refreshOutline} from "ionicons/icons";
+import {pauseOutline, playOutline, refreshOutline, settingsOutline} from "ionicons/icons";
 import CircleLoader from "../CircleLoader";
 import styles from './Timer.module.scss';
+import SettingsModal from "../SettingsModal";
 
 enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
@@ -13,6 +14,7 @@ enum TIMER_TYPE {
 }
 
 const Timer = () => {
+  const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
   const {workTime, shortBreakTime, longBreakTime, rounds} = useContext(SettingsContext);
   const [minutes, setMinutes] = useState(workTime);
   const [seconds, setSeconds] = useState(0);
@@ -116,6 +118,7 @@ const Timer = () => {
 
   return (
     <div className={styles.wrapper}>
+      <SettingsModal isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{timerType}</h1>
 
       <div className={styles.timeWrapper}>
@@ -132,15 +135,19 @@ const Timer = () => {
 
       <div>Rounds left: {roundsLeft}</div>
       <div className={styles.buttons}>
-        <IonButton shape={'round'} color="primary" onClick={() => setIsRunning(!isRunning)}>
+        <IonButton color="secondary" onClick={reset}>
+          <IonIcon aria-hidden="true" icon={refreshOutline}/>
+        </IonButton>
+        <IonButton color="primary" onClick={() => setIsRunning(!isRunning)}>
           {isRunning
             ? <IonIcon aria-hidden="true" icon={pauseOutline}/>
             : <IonIcon aria-hidden="true" icon={playOutline}/>
           }
         </IonButton>
-        <IonButton shape={'round'} color="secondary" onClick={reset}>
-          <IonIcon aria-hidden="true" icon={refreshOutline}/>
+        <IonButton color="secondary" onClick={() => setSettingsModalIsOpen(!settingsModalIsOpen)}>
+          <IonIcon aria-hidden="true" icon={settingsOutline}/>
         </IonButton>
+
       </div>
     </div>
   );
