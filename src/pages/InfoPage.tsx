@@ -50,8 +50,9 @@ const InfoPage: FC = () => {
                   be incredibly grateful for any donations you're able to make. <br /> Every little
                   bit truly makes a difference and helps us in our mission to provide you with the
                   best possible service. Thank you from the bottom of our hearts for being a part of
-                  our journey. Your support means the world to us! 🚀✨
+                  our journey. Your support means the world to us!
                 </p>
+                <p>🚀✨</p>
                 <p>
                   Once we reach 10 donations, we'll proudly display the names of each and every one
                   of our amazing donors within the app. It's our way of saying a big, heartfelt

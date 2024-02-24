@@ -127,6 +127,7 @@ const Timer = () => {
     <div className={styles.wrapper}>
       <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{getTaskName()}</h1>
+      <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
 
       <div className={styles.timeWrapper}>
         <div className={styles.circle}>
@@ -153,9 +154,11 @@ const Timer = () => {
         </IonButton>
       </div>
 
-      <div>Rounds left: {roundsLeft}</div>
       <div className={styles.buttons}>
-        <IonButton color="secondary" onClick={reset}>
+        <IonButton
+          disabled={workTime === minutes && seconds === 0 && rounds === roundsLeft}
+          color="secondary"
+          onClick={reset}>
           <span className="sr-only">reset</span>
           <IonIcon aria-hidden="true" icon={refreshOutline} />
         </IonButton>

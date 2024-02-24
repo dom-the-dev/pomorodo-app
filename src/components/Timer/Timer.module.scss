@@ -6,6 +6,10 @@
   justify-content: center;
   flex-direction: column;
 
+  .subTitle {
+    margin: 0;
+  }
+
   .timeWrapper {
     position: relative;
     height: 280px;
