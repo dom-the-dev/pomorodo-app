@@ -4,14 +4,11 @@ import {
   IonGrid,
   IonHeader, IonItem, IonLabel, IonList,
   IonPage,
-  IonRange,
   IonRow,
   IonTitle,
-  IonToggle,
   IonToolbar
 } from '@ionic/react';
-import {FC, useContext} from "react";
-import SettingsContext from "../context/Settings.context";
+import {FC} from "react";
 
 const InfoPage: FC = () => {
   return (

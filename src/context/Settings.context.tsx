@@ -1,4 +1,3 @@
-
 import {createContext, Dispatch, SetStateAction} from 'react';
 
 const SettingsContext = createContext<{

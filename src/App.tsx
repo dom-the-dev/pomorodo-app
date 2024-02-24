@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {informationCircleOutline, settingsOutline, stopwatchOutline} from 'ionicons/icons';
+import {informationCircleOutline, stopwatchOutline} from 'ionicons/icons';
 import TomoDoro from './pages/TomoDoro';
 import InfoPage from './pages/InfoPage';
 

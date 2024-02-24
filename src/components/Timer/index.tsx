@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
 import SettingsContext from "../../context/Settings.context";
 import {IonButton, IonIcon } from "@ionic/react";
 import {
@@ -113,19 +112,6 @@ const Timer = () => {
     const totalTimeInSeconds = (timerType === TIMER_TYPE.WORK ? workTime : timerType === TIMER_TYPE.SHORT_BREAK ? shortBreakTime : longBreakTime) * 60;
     setProgress((100 / totalTimeInSeconds) * (minutes * 60 + seconds));
   }, [seconds, minutes, timerType, workTime, shortBreakTime, longBreakTime]);
-
-  const getTimerColor = () => {
-    switch (timerType) {
-      case TIMER_TYPE.WORK:
-        return TIMER_BACKGROUND_COLOR.RED;
-      case TIMER_TYPE.SHORT_BREAK:
-        return TIMER_BACKGROUND_COLOR.VIOLET;
-      case TIMER_TYPE.LONG_BREAK:
-        return TIMER_BACKGROUND_COLOR.BLUE;
-      default:
-        return TIMER_BACKGROUND_COLOR.RED;
-    }
-  };
 
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
