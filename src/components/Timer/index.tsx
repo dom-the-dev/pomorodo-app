@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SettingsContext from '../../context/Settings.context';
-import { IonButton, IonIcon } from '@ionic/react';
+import { IonButton, IonCheckbox, IonIcon } from '@ionic/react';
 import {
   eyeOffSharp,
   eyeSharp,
@@ -19,7 +19,10 @@ enum TIMER_TYPE {
   WORK = 'WORK'
 }
 
+import sound from '../../../resources/sound.mp3';
+
 const Timer = () => {
+  const [audio, setAudio] = useState<HTMLAudioElement>(null);
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
   const { workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning } =
     useContext(SettingsContext);
@@ -120,6 +123,17 @@ const Timer = () => {
     return timerType;
   };
 
+  const handleMusic = async () => {
+    if (!audio) {
+      const thisAudio = new Audio(sound);
+      setAudio(thisAudio);
+      await thisAudio.play();
+    } else {
+      audio.pause();
+      setAudio(null);
+    }
+  };
+
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
@@ -128,6 +142,13 @@ const Timer = () => {
       <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{getTaskName()}</h1>
       <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
+
+      <div className={styles.musicWrapper}>
+        {/*https://www.chosic.com/free-music/chill/?mixtag=beats*/}
+        <IonCheckbox onClick={handleMusic} labelPlacement="end">
+          Play music
+        </IonCheckbox>
+      </div>
 
       <div className={styles.timeWrapper}>
         <div className={styles.circle}>
