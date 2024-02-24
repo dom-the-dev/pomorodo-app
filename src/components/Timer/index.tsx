@@ -1,8 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
-import BackgroundColorLoader, {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
+import {TIMER_BACKGROUND_COLOR} from "../BackgroundColorLoader";
 import SettingsContext from "../../context/Settings.context";
-import {IonButton, IonCol, IonGrid, IonIcon, IonRow, IonToast} from "@ionic/react";
-import {pauseOutline, playOutline, refreshOutline, settingsOutline} from "ionicons/icons";
+import {IonButton, IonIcon } from "@ionic/react";
+import {
+  eyeOffSharp,
+  eyeSharp,
+  pauseOutline,
+  playOutline,
+  refreshOutline,
+  settingsOutline
+} from "ionicons/icons";
 import CircleLoader from "../CircleLoader";
 import styles from './Timer.module.scss';
 import SettingsModal from "../SettingsModal";
@@ -23,11 +30,12 @@ const Timer = () => {
     timerIsRunning,
     setTimerIsRunning
   } = useContext(SettingsContext);
-  const [minutes, setMinutes] = useState(workTime);
-  const [seconds, setSeconds] = useState(0);
-  const [roundsLeft, setRoundsLeft] = useState(rounds);
+  const [minutes, setMinutes] = useState<number>(workTime);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [roundsLeft, setRoundsLeft] = useState<number>(rounds);
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState<number>(0);
+  const [showTime, setShowTime] = useState<boolean>(true);
 
   // Consolidated useEffect for timer logic
   useEffect(() => {
@@ -132,20 +140,26 @@ const Timer = () => {
           <CircleLoader progress={progress}/>
         </div>
 
-        <div className={styles.time}>
-          <h1>
-            {timerMinutes}:{timerSeconds}
-          </h1>
-        </div>
+        <IonButton className={styles.timeButton} fill="clear" color="secondary" onClick={() => setShowTime(!showTime)}>
+          <div className={styles.timeButtonContent}>
+            <h1 className={showTime ? '' : styles.blurred}>
+              {timerMinutes}:{timerSeconds}
+            </h1>
+            <span className="sr-only">{!showTime ? 'show time' : 'hide time'}</span>
+            <IonIcon color={'primary'} aria-hidden="true"  size="large" icon={!showTime ? eyeSharp : eyeOffSharp}/>
+          </div>
+        </IonButton>
+
+
       </div>
 
       <div>Rounds left: {roundsLeft}</div>
       <div className={styles.buttons}>
         <IonButton color="secondary" onClick={reset}>
           <span className="sr-only">reset</span>
-        <IonIcon aria-hidden="true" icon={refreshOutline}/>
-      </IonButton>
-      <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
+          <IonIcon aria-hidden="true" icon={refreshOutline}/>
+        </IonButton>
+        <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
           {timerIsRunning
             ? <><IonIcon aria-hidden="true" icon={pauseOutline}/>
               <span className="sr-only">pause</span></>
