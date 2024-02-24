@@ -15,13 +15,11 @@ enum TIMER_TYPE {
 
 const Timer = () => {
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
-  const [isOpenSettingsToast, setIsOpenSettingsToast] = useState<boolean>(false)
-  const {workTime, shortBreakTime, longBreakTime, rounds} = useContext(SettingsContext);
+  const {workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning} = useContext(SettingsContext);
   const [minutes, setMinutes] = useState(workTime);
   const [seconds, setSeconds] = useState(0);
   const [roundsLeft, setRoundsLeft] = useState(rounds);
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
-  const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
 
   // Consolidated useEffect for timer logic
@@ -40,12 +38,12 @@ const Timer = () => {
     };
 
     let interval: NodeJS.Timeout;
-    if (isRunning) {
+    if (timerIsRunning) {
       interval = setInterval(handleTimerExpiration, 1000);
     }
 
     return () => clearInterval(interval); // Clear interval on component unmount or when isRunning changes
-  }, [isRunning, seconds, minutes]);
+  }, [timerIsRunning, seconds, minutes]);
 
   // UseEffect for reset when settings change, kept as is but can add logic here as needed.
   useEffect(() => {
@@ -90,7 +88,7 @@ const Timer = () => {
   };
 
   const reset = () => {
-    setIsRunning(false);
+    setTimerIsRunning(false);
     setTimerType(TIMER_TYPE.WORK);
     setRoundsLeft(rounds);
     resetTimer(TIMER_TYPE.WORK);
@@ -139,31 +137,16 @@ const Timer = () => {
         <IonButton color="secondary" onClick={reset}>
           <IonIcon aria-hidden="true" icon={refreshOutline}/>
         </IonButton>
-        <IonButton color="primary" onClick={() => setIsRunning(!isRunning)}>
-          {isRunning
+        <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
+          {timerIsRunning
             ? <IonIcon aria-hidden="true" icon={pauseOutline}/>
             : <IonIcon aria-hidden="true" icon={playOutline}/>
           }
         </IonButton>
 
-        <IonButton color="secondary" onClick={() => isRunning ? setIsOpenSettingsToast(true) : setSettingsModalIsOpen(!settingsModalIsOpen)}>
+        <IonButton color="secondary" onClick={() => setSettingsModalIsOpen(!settingsModalIsOpen)}>
           <IonIcon aria-hidden="true" icon={settingsOutline}/>
         </IonButton>
-
-        <IonToast
-          position="top"
-          isOpen={isOpenSettingsToast}
-          message="Tomodoro is running. Reset to change settings"
-          onDidDismiss={() => setIsOpenSettingsToast(false)}
-          duration={5000}
-          color={"warning"}
-          buttons={[
-            {
-              text: 'Dismiss',
-              role: 'cancel',
-            },
-          ]}
-        ></IonToast>
 
       </div>
     </div>

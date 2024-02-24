@@ -1,5 +1,6 @@
-import React, {Dispatch, FC, SetStateAction, useContext} from 'react';
+import React, {Dispatch, FC, FormEvent, SetStateAction, useContext, useState} from 'react';
 import {
+  IonAlert,
   IonButton,
   IonButtons,
   IonCol,
@@ -26,61 +27,114 @@ const SettingsModal: FC<{ isOpen: boolean, setIsOpen: Dispatch<SetStateAction<bo
     shortBreakTime,
     setShortBreakTime,
     darkMode,
-    setDarkMode
+    setDarkMode,
+    timerIsRunning
   } = useContext(SettingsContext)
-  return (
-    <IonModal isOpen={isOpen}>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Settings</IonTitle>
-          <IonButtons slot="end">
-            <IonButton onClick={() => setIsOpen(false)}>Close</IonButton>
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        <IonGrid>
-          <IonRow>
-            <IonCol>
-              Work Time: {workTime} Minutes <br/>
-              <IonRange value={workTime} snaps={true} step={5} min={5} max={60} pin={true}
-                        pinFormatter={(value: number) => `${value} Min.`}
-                        onIonChange={(e) => setWorkTime(e.detail.value as number)}/>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              Short Break Time: {shortBreakTime} Minutes <br/>
-              <IonRange value={shortBreakTime} pin={true} snaps={true} step={5} min={5} max={30}
-                        pinFormatter={(value: number) => `${value} Min.`}
-                        onIonChange={(e) => setShortBreakTime(e.detail.value as number)}/>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              Long Break Time: {longBreakTime} Minutes <br/>
-              <IonRange value={longBreakTime} ticks={true} pin={true} snaps={true} step={5} min={5} max={60}
-                        pinFormatter={(value: number) => `${value} Min.`}
-                        onIonChange={(e) => setLongBreakTime(e.detail.value as number)}/>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              Rounds: {rounds}
-              <IonRange value={rounds} pin={true} snaps={true} step={1} min={1} max={10}
-                        pinFormatter={(value: number) => `${value} Rounds`}
-                        onIonChange={(e) => setRounds(e.detail.value as number)}/>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              <IonToggle disabled onIonChange={() => setDarkMode(!darkMode)} checked={darkMode}>Dark Mode</IonToggle>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
-    </IonModal>
 
+  const [localWorkTime, setLocalWorkTime] = useState<number>(workTime);
+  const [localShortBreakTime, setLocalShortBreakTime] = useState<number>(shortBreakTime);
+  const [localLongBreakTime, setLocalLongBreakTime] = useState<number>(longBreakTime);
+  const [localRounds, setLocalRounds] = useState<number>(rounds);
+  const [showAlert, setShowAlert] = useState<boolean>(false);
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    if (timerIsRunning) {
+      setShowAlert(true)
+    } else {
+      saveSettings();
+      setIsOpen(false);
+    }
+  }
+
+  const saveSettings = () => {
+    setRounds(localRounds)
+    setWorkTime(localWorkTime)
+    setLongBreakTime(longBreakTime)
+    setShortBreakTime(localShortBreakTime)
+  }
+
+  return (
+    <>
+      <IonAlert
+        isOpen={showAlert}
+        header="Timer is running"
+        subHeader="If you change your settings the timer will be reseted."
+        message="Are you sure you want to change your settings?"
+        onDidDismiss={() => setShowAlert(false)}
+        buttons={[
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              setIsOpen(false)
+            },
+          },
+          {
+            text: 'Save',
+            role: 'confirm',
+            handler: () => {
+              saveSettings()
+              setIsOpen(false)
+            },
+          },
+        ]}
+      />
+      <IonModal isOpen={isOpen}>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonButton onClick={() => setIsOpen(false)}>Cancel</IonButton>
+            </IonButtons>
+            <IonTitle>Settings</IonTitle>
+            <IonButtons slot="end">
+              <IonButton onClick={handleSubmit}>Save</IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent className="ion-padding">
+          <IonGrid>
+            <IonRow>
+              <IonCol>
+                Work Time: {localWorkTime} Minutes <br/>
+                <IonRange value={localWorkTime} snaps={true} step={5} min={5} max={60} pin={true}
+                          pinFormatter={(value: number) => `${value} Min.`}
+                          onIonChange={(e) => setLocalWorkTime(e.detail.value as number)}/>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                Short Break Time: {localShortBreakTime} Minutes <br/>
+                <IonRange value={localShortBreakTime} pin={true} snaps={true} step={5} min={5} max={30}
+                          pinFormatter={(value: number) => `${value} Min.`}
+                          onIonChange={(e) => setLocalShortBreakTime(e.detail.value as number)}/>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                Long Break Time: {localLongBreakTime} Minutes <br/>
+                <IonRange value={localLongBreakTime} ticks={true} pin={true} snaps={true} step={5} min={5} max={60}
+                          pinFormatter={(value: number) => `${value} Min.`}
+                          onIonChange={(e) => setLocalLongBreakTime(e.detail.value as number)}/>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                Rounds: {localRounds}
+                <IonRange value={localRounds} pin={true} snaps={true} step={1} min={1} max={10}
+                          pinFormatter={(value: number) => `${value} Rounds`}
+                          onIonChange={(e) => setLocalRounds(e.detail.value as number)}/>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonToggle disabled onIonChange={() => setDarkMode(!darkMode)} checked={darkMode}>Dark Mode</IonToggle>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+        </IonContent>
+      </IonModal>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader,
+  IonHeader, IonItem, IonLabel, IonList,
   IonPage,
   IonRange,
   IonRow,
@@ -21,19 +21,22 @@ const InfoPage: FC = () => {
           <IonTitle>Info</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonGrid fixed>
+      <IonContent color="light">
+        <IonGrid className="ion-padding">
           <IonRow>
             <IonCol>
-              App by Dom & Niklas
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol>
-              Todo
+              <h1>Tomodoro</h1>
             </IonCol>
           </IonRow>
         </IonGrid>
+        <IonList inset={true}>
+          <IonItem>
+            <IonLabel>By Dominiklas</IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Version 0.1</IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   );

@@ -8,6 +8,7 @@ const SettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [longBreakTime, setLongBreakTime] = useState<number>(30);
   const [rounds, setRounds] = useState<number>(3);
   const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [timerIsRunning, setTimerIsRunning] = useState<boolean>(false);
 
   useEffect(() => {
       document.body.classList.toggle('dark', darkMode);
@@ -25,7 +26,9 @@ const SettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
         longBreakTime,
         setWorkTime,
         setShortBreakTime,
-        setLongBreakTime
+        setLongBreakTime,
+        timerIsRunning,
+        setTimerIsRunning
       }}
     >
       {children}
