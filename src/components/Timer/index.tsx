@@ -15,7 +15,14 @@ enum TIMER_TYPE {
 
 const Timer = () => {
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
-  const {workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning} = useContext(SettingsContext);
+  const {
+    workTime,
+    shortBreakTime,
+    longBreakTime,
+    rounds,
+    timerIsRunning,
+    setTimerIsRunning
+  } = useContext(SettingsContext);
   const [minutes, setMinutes] = useState(workTime);
   const [seconds, setSeconds] = useState(0);
   const [roundsLeft, setRoundsLeft] = useState(rounds);
@@ -117,7 +124,7 @@ const Timer = () => {
 
   return (
     <div className={styles.wrapper}>
-      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
+      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen}/>
       <h1 className={styles.title}>{timerType}</h1>
 
       <div className={styles.timeWrapper}>
@@ -135,16 +142,20 @@ const Timer = () => {
       <div>Rounds left: {roundsLeft}</div>
       <div className={styles.buttons}>
         <IonButton color="secondary" onClick={reset}>
-          <IonIcon aria-hidden="true" icon={refreshOutline}/>
-        </IonButton>
-        <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
+          <span className="sr-only">reset</span>
+        <IonIcon aria-hidden="true" icon={refreshOutline}/>
+      </IonButton>
+      <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
           {timerIsRunning
-            ? <IonIcon aria-hidden="true" icon={pauseOutline}/>
-            : <IonIcon aria-hidden="true" icon={playOutline}/>
+            ? <><IonIcon aria-hidden="true" icon={pauseOutline}/>
+              <span className="sr-only">pause</span></>
+            : <><IonIcon aria-hidden="true" icon={playOutline}/>
+              <span className="sr-only">play</span></>
           }
         </IonButton>
 
         <IonButton color="secondary" onClick={() => setSettingsModalIsOpen(!settingsModalIsOpen)}>
+          <span className="sr-only">settings</span>
           <IonIcon aria-hidden="true" icon={settingsOutline}/>
         </IonButton>
 

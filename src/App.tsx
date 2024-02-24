@@ -31,7 +31,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css';
+import './theme/globals.scss';
+import './theme/variables.scss';
 import {FC} from "react";
 import SettingsContextProvider from "./provider/SettingsContextProvider.provider";
 import {Redirect} from "react-router";
