@@ -1,6 +1,5 @@
-import {FC, PropsWithChildren, useEffect, useState} from 'react';
-import SettingsContext from "../context/Settings.context";
-
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import SettingsContext from '../context/Settings.context';
 
 const SettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [workTime, setWorkTime] = useState<number>(25);
@@ -11,7 +10,7 @@ const SettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [timerIsRunning, setTimerIsRunning] = useState<boolean>(false);
 
   useEffect(() => {
-      document.body.classList.toggle('dark', darkMode);
+    document.body.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
   return (
@@ -29,8 +28,7 @@ const SettingsContextProvider: FC<PropsWithChildren> = ({ children }) => {
         setLongBreakTime,
         timerIsRunning,
         setTimerIsRunning
-      }}
-    >
+      }}>
       {children}
     </SettingsContext.Provider>
   );

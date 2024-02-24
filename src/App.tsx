@@ -1,4 +1,4 @@
-import {Route} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
@@ -9,8 +9,8 @@ import {
   IonTabs,
   setupIonicReact
 } from '@ionic/react';
-import {IonReactRouter} from '@ionic/react-router';
-import {informationCircleOutline, stopwatchOutline} from 'ionicons/icons';
+import { IonReactRouter } from '@ionic/react-router';
+import { informationCircleOutline, stopwatchOutline } from 'ionicons/icons';
 import TomoDoro from './pages/TomoDoro';
 import InfoPage from './pages/InfoPage';
 
@@ -33,9 +33,9 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/globals.scss';
 import './theme/variables.scss';
-import {FC} from "react";
-import SettingsContextProvider from "./provider/SettingsContextProvider.provider";
-import {Redirect} from "react-router";
+import { FC } from 'react';
+import SettingsContextProvider from './provider/SettingsContextProvider.provider';
+import { Redirect } from 'react-router';
 
 setupIonicReact();
 
@@ -46,10 +46,10 @@ const App: FC = () => (
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/timer">
-              <TomoDoro/>
+              <TomoDoro />
             </Route>
             <Route exact path="/info">
-              <InfoPage/>
+              <InfoPage />
             </Route>
             <Route exact path="/">
               <Redirect to={'/timer'} />
@@ -57,11 +57,11 @@ const App: FC = () => (
           </IonRouterOutlet>
           <IonTabBar slot="bottom">
             <IonTabButton tab="timer" href="/timer">
-              <IonIcon aria-hidden="true" icon={stopwatchOutline}/>
+              <IonIcon aria-hidden="true" icon={stopwatchOutline} />
               <IonLabel>TomoDoro</IonLabel>
             </IonTabButton>
             <IonTabButton tab="info" href="/info">
-              <IonIcon aria-hidden="true" icon={informationCircleOutline}/>
+              <IonIcon aria-hidden="true" icon={informationCircleOutline} />
               <IonLabel>Info</IonLabel>
             </IonTabButton>
           </IonTabBar>

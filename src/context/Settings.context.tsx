@@ -1,18 +1,18 @@
-import {createContext, Dispatch, SetStateAction} from 'react';
+import { createContext, Dispatch, SetStateAction } from 'react';
 
 const SettingsContext = createContext<{
   rounds: number;
-  setRounds: Dispatch<SetStateAction<number>>
+  setRounds: Dispatch<SetStateAction<number>>;
   workTime: number;
-  setWorkTime: Dispatch<SetStateAction<number>>
+  setWorkTime: Dispatch<SetStateAction<number>>;
   shortBreakTime: number;
-  setShortBreakTime: Dispatch<SetStateAction<number>>
+  setShortBreakTime: Dispatch<SetStateAction<number>>;
   longBreakTime: number;
-  setLongBreakTime:  Dispatch<SetStateAction<number>>
+  setLongBreakTime: Dispatch<SetStateAction<number>>;
   darkMode: boolean;
-  setDarkMode:  Dispatch<SetStateAction<boolean>>
+  setDarkMode: Dispatch<SetStateAction<boolean>>;
   timerIsRunning: boolean;
-  setTimerIsRunning:  Dispatch<SetStateAction<boolean>>
+  setTimerIsRunning: Dispatch<SetStateAction<boolean>>;
 }>({
   rounds: 3,
   setRounds: null,
@@ -23,9 +23,9 @@ const SettingsContext = createContext<{
   longBreakTime: 30,
   setLongBreakTime: null,
   darkMode: false,
-  setDarkMode:  null,
+  setDarkMode: null,
   timerIsRunning: false,
-  setTimerIsRunning:  null
+  setTimerIsRunning: null
 });
 
 export default SettingsContext;

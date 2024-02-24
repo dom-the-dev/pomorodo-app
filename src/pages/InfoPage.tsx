@@ -2,13 +2,16 @@ import {
   IonCol,
   IonContent,
   IonGrid,
-  IonHeader, IonItem, IonLabel, IonList,
+  IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
   IonPage,
   IonRow,
   IonTitle,
   IonToolbar
 } from '@ionic/react';
-import {FC} from "react";
+import { FC } from 'react';
 
 const InfoPage: FC = () => {
   return (

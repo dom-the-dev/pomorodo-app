@@ -1,6 +1,6 @@
-import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import {FC} from "react";
-import Timer from "../components/Timer";
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { FC } from 'react';
+import Timer from '../components/Timer';
 
 const TomoDoro: FC = () => {
   return (
@@ -11,7 +11,7 @@ const TomoDoro: FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <Timer/>
+        <Timer />
       </IonContent>
     </IonPage>
   );

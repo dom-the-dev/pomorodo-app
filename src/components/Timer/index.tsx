@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import SettingsContext from "../../context/Settings.context";
-import {IonButton, IonIcon } from "@ionic/react";
+import React, { useContext, useEffect, useState } from 'react';
+import SettingsContext from '../../context/Settings.context';
+import { IonButton, IonIcon } from '@ionic/react';
 import {
   eyeOffSharp,
   eyeSharp,
@@ -8,27 +8,21 @@ import {
   playOutline,
   refreshOutline,
   settingsOutline
-} from "ionicons/icons";
-import CircleLoader from "../CircleLoader";
+} from 'ionicons/icons';
+import CircleLoader from '../CircleLoader';
 import styles from './Timer.module.scss';
-import SettingsModal from "../SettingsModal";
+import SettingsModal from '../SettingsModal';
 
 enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
   LONG_BREAK = 'LONG_BREAK',
-  WORK = 'WORK',
+  WORK = 'WORK'
 }
 
 const Timer = () => {
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
-  const {
-    workTime,
-    shortBreakTime,
-    longBreakTime,
-    rounds,
-    timerIsRunning,
-    setTimerIsRunning
-  } = useContext(SettingsContext);
+  const { workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning } =
+    useContext(SettingsContext);
   const [minutes, setMinutes] = useState<number>(workTime);
   const [seconds, setSeconds] = useState<number>(0);
   const [roundsLeft, setRoundsLeft] = useState<number>(rounds);
@@ -109,7 +103,12 @@ const Timer = () => {
   };
 
   useEffect(() => {
-    const totalTimeInSeconds = (timerType === TIMER_TYPE.WORK ? workTime : timerType === TIMER_TYPE.SHORT_BREAK ? shortBreakTime : longBreakTime) * 60;
+    const totalTimeInSeconds =
+      (timerType === TIMER_TYPE.WORK
+        ? workTime
+        : timerType === TIMER_TYPE.SHORT_BREAK
+          ? shortBreakTime
+          : longBreakTime) * 60;
     setProgress((100 / totalTimeInSeconds) * (minutes * 60 + seconds));
   }, [seconds, minutes, timerType, workTime, shortBreakTime, longBreakTime]);
 
@@ -118,47 +117,58 @@ const Timer = () => {
 
   return (
     <div className={styles.wrapper}>
-      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen}/>
+      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{timerType}</h1>
 
       <div className={styles.timeWrapper}>
         <div className={styles.circle}>
-          <CircleLoader progress={progress}/>
+          <CircleLoader progress={progress} />
         </div>
 
-        <IonButton className={styles.timeButton} fill="clear" color="secondary" onClick={() => setShowTime(!showTime)}>
+        <IonButton
+          className={styles.timeButton}
+          fill="clear"
+          color="secondary"
+          onClick={() => setShowTime(!showTime)}>
           <div className={styles.timeButtonContent}>
             <h1 className={showTime ? '' : styles.blurred}>
               {timerMinutes}:{timerSeconds}
             </h1>
             <span className="sr-only">{!showTime ? 'show time' : 'hide time'}</span>
-            <IonIcon color={'primary'} aria-hidden="true"  size="large" icon={!showTime ? eyeSharp : eyeOffSharp}/>
+            <IonIcon
+              color={'primary'}
+              aria-hidden="true"
+              size="large"
+              icon={!showTime ? eyeSharp : eyeOffSharp}
+            />
           </div>
         </IonButton>
-
-
       </div>
 
       <div>Rounds left: {roundsLeft}</div>
       <div className={styles.buttons}>
         <IonButton color="secondary" onClick={reset}>
           <span className="sr-only">reset</span>
-          <IonIcon aria-hidden="true" icon={refreshOutline}/>
+          <IonIcon aria-hidden="true" icon={refreshOutline} />
         </IonButton>
         <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
-          {timerIsRunning
-            ? <><IonIcon aria-hidden="true" icon={pauseOutline}/>
-              <span className="sr-only">pause</span></>
-            : <><IonIcon aria-hidden="true" icon={playOutline}/>
-              <span className="sr-only">play</span></>
-          }
+          {timerIsRunning ? (
+            <>
+              <IonIcon aria-hidden="true" icon={pauseOutline} />
+              <span className="sr-only">pause</span>
+            </>
+          ) : (
+            <>
+              <IonIcon aria-hidden="true" icon={playOutline} />
+              <span className="sr-only">play</span>
+            </>
+          )}
         </IonButton>
 
         <IonButton color="secondary" onClick={() => setSettingsModalIsOpen(!settingsModalIsOpen)}>
           <span className="sr-only">settings</span>
-          <IonIcon aria-hidden="true" icon={settingsOutline}/>
+          <IonIcon aria-hidden="true" icon={settingsOutline} />
         </IonButton>
-
       </div>
     </div>
   );

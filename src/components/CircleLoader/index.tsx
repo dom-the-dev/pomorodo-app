@@ -1,10 +1,9 @@
 import styles from './CircleLoader.module.scss';
-import {FC, useEffect} from "react";
+import { FC, useEffect } from 'react';
 
-const CircleLoader: FC<{progress: number}> = ({progress}) => {
-
+const CircleLoader: FC<{ progress: number }> = ({ progress }) => {
   useEffect(() => {
-    const progressElem = document.getElementById("progress");
+    const progressElem = document.getElementById('progress');
     let radius = parseInt(progressElem.getAttribute('r'));
     //circumference of a circle = 2πr;
     let circumference = radius * 2 * Math.PI;
@@ -14,8 +13,8 @@ const CircleLoader: FC<{progress: number}> = ({progress}) => {
 
   return (
     <svg width="250" height="250">
-      <circle r="100" cx="125" cy="125" className={styles.circle}/>
-      <circle r="100" cx="125" cy="125" id={'progress'} className={styles.progress}/>
+      <circle r="100" cx="125" cy="125" className={styles.circle} />
+      <circle r="100" cx="125" cy="125" id={'progress'} className={styles.progress} />
     </svg>
   );
 };
