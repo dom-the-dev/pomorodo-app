@@ -112,13 +112,21 @@ const Timer = () => {
     setProgress((100 / totalTimeInSeconds) * (minutes * 60 + seconds));
   }, [seconds, minutes, timerType, workTime, shortBreakTime, longBreakTime]);
 
+  const getTaskName = () => {
+    if (timerType === TIMER_TYPE.WORK) {
+      return 'Fokus';
+    }
+
+    return timerType;
+  };
+
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
   return (
     <div className={styles.wrapper}>
       <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
-      <h1 className={styles.title}>{timerType}</h1>
+      <h1 className={styles.title}>{getTaskName()}</h1>
 
       <div className={styles.timeWrapper}>
         <div className={styles.circle}>
