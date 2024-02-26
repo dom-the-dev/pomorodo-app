@@ -68,7 +68,7 @@ const InfoPage: FC = () => {
                   <input type="hidden" name="hosted_button_id" value="C9WSX8C9EVR4Q" />
                   <input
                     type="image"
-                    src="https://pics.paypal.com/00/s/YTc3ZDBiYzgtODFjMy00OGUyLThmOWEtNjk1NDZhNzhiOWEw/file.PNG"
+                    src="https://pics.paypal.com/00/s/NzhhNzZlMjctYWQ5NC00NzMxLTg4ZmMtZGNiM2NmZmM2Yzg2/file.PNG"
                     // @ts-ignore
                     border="0"
                     name="submit"
