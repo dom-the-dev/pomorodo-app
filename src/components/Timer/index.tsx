@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SettingsContext from '../../context/Settings.context';
-import { IonButton, IonCheckbox, IonIcon } from '@ionic/react';
+import {IonButton, IonCheckbox, IonIcon, IonToast} from '@ionic/react';
 import {
   eyeOffSharp,
   eyeSharp,
@@ -16,7 +16,8 @@ import SettingsModal from '../SettingsModal';
 enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
   LONG_BREAK = 'LONG_BREAK',
-  WORK = 'WORK'
+  WORK = 'WORK',
+  FINISHED = 'FINISHED'
 }
 
 import sound from '../../../resources/sound.mp3';
@@ -32,6 +33,10 @@ const Timer = () => {
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
   const [progress, setProgress] = useState<number>(0);
   const [showTime, setShowTime] = useState<boolean>(true);
+  const [showToaster, setShowToaster] = useState<boolean>(false)
+const isProd = import.meta.env.VITE_LOCAL === "PRODUCTION";
+
+
 
   // Consolidated useEffect for timer logic
   useEffect(() => {
@@ -67,7 +72,8 @@ const Timer = () => {
 
     switch (timerType) {
       case TIMER_TYPE.WORK:
-        nextType = roundsLeft > 1 ? TIMER_TYPE.SHORT_BREAK : TIMER_TYPE.LONG_BREAK;
+        nextType = roundsLeft > 1 ? TIMER_TYPE.SHORT_BREAK : roundsLeft === 1 ? TIMER_TYPE.LONG_BREAK : TIMER_TYPE.FINISHED;
+        nextRoundsLeft = roundsLeft === 1 ? 0 : roundsLeft;
         break;
       case TIMER_TYPE.SHORT_BREAK:
         nextType = TIMER_TYPE.WORK;
@@ -75,6 +81,7 @@ const Timer = () => {
         break;
       case TIMER_TYPE.LONG_BREAK:
         nextRoundsLeft -= 1;
+        nextType = TIMER_TYPE.FINISHED;
         break;
     }
 
@@ -94,6 +101,8 @@ const Timer = () => {
       case TIMER_TYPE.LONG_BREAK:
         setMinutes(longBreakTime);
         break;
+      case TIMER_TYPE.FINISHED:
+        reset();
     }
     setSeconds(0);
   };
@@ -119,6 +128,10 @@ const Timer = () => {
     if (timerType === TIMER_TYPE.WORK) {
       return 'Fokus';
     }
+    if (timerType === TIMER_TYPE.FINISHED) {
+      setShowToaster(true);
+      return 'Du hast es geschafft 🎉';
+    }
 
     return timerType;
   };
@@ -137,8 +150,21 @@ const Timer = () => {
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
+
+  const setNextRound = () => {
+    setMinutes(0),
+        setSeconds(1)
+  }
   return (
     <div className={styles.wrapper}>
+      {!isProd ? <button onClick={setNextRound}>Next Round</button> : null}
+      <IonToast
+          position={'top'}
+          isOpen={showToaster}
+          message="This toast will close in 5 seconds"
+          onDidDismiss={() => setShowToaster(false)}
+          duration={5000}
+      />
       <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{getTaskName()}</h1>
       <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
