@@ -22,22 +22,24 @@ const InfoPage: FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent color="light">
-        <IonGrid className="ion-padding">
-          <IonRow>
-            <IonCol>
-              <h1>Tomodoro</h1>
-            </IonCol>
-          </IonRow>
+        <IonGrid className="ion-padding" fixed>
+          <IonGrid className="ion-padding">
+            <IonRow>
+              <IonCol>
+                <h1>Tomodoro</h1>
+              </IonCol>
+            </IonRow>
+          </IonGrid>
+          <IonList inset={true}>
+            <IonItem>
+              <IonLabel>By DOMINIKLAS</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonLabel>Version 1.0</IonLabel>
+            </IonItem>
+          </IonList>
         </IonGrid>
-        <IonList inset={true}>
-          <IonItem>
-            <IonLabel>By DOMINIKLAS</IonLabel>
-          </IonItem>
-          <IonItem>
-            <IonLabel>Version 1.0</IonLabel>
-          </IonItem>
-        </IonList>
-        <IonGrid className="ion-padding">
+        <IonGrid className="ion-padding" fixed>
           <IonRow>
             <IonCol>
               <div style={{ textAlign: 'center' }}>
@@ -49,15 +51,10 @@ const InfoPage: FC = () => {
                   interruptions. If you love what we do and want to help us continue improving, we'd
                   be incredibly grateful for any donations you're able to make. <br /> Every little
                   bit truly makes a difference and helps us in our mission to provide you with the
-                  best possible service. Thank you from the bottom of our hearts for being a part of
-                  our journey. Your support means the world to us!
+                  best possible service. Thank you for being a part of our journey. Your support
+                  means the world to us!
                 </p>
                 <p>🚀✨</p>
-                <p>
-                  Once we reach 10 donations, we'll proudly display the names of each and every one
-                  of our amazing donors within the app. It's our way of saying a big, heartfelt
-                  thank you for helping us thrive and grow.
-                </p>
               </div>
             </IonCol>
           </IonRow>
