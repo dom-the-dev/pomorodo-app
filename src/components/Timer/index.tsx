@@ -151,7 +151,6 @@ const Timer = () => {
       {import.meta.env.VITE_ENV === 'DEV' ? (
         <button onClick={setNextRound}>Next Round</button>
       ) : null}
-      <button onClick={() => setShowToaster(true)}>show toast</button>
 
       <IonToast
         position={'top'}
