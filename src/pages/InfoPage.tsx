@@ -74,19 +74,6 @@ const InfoPage: FC = () => {
                   <IonLabel>
                     <IonLabel>
                       <a
-                        href="https://domthedev.com/tomodoro/terms"
-                        rel={'noopener noreferrer'}
-                        target={'_blank'}>
-                        <h3>Link</h3>
-                      </a>
-                      <p>Terms of use</p>
-                    </IonLabel>
-                  </IonLabel>
-                </IonItem>
-                <IonItem>
-                  <IonLabel>
-                    <IonLabel>
-                      <a
                         href="https://domthedev.com/tomodoro/privacy"
                         rel={'noopener noreferrer'}
                         target={'_blank'}>
