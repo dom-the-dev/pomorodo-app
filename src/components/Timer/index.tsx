@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SettingsContext from '../../context/Settings.context';
-import { IonButton, IonCheckbox, IonIcon, IonToast } from '@ionic/react';
+import { IonButton, IonIcon, IonToast } from '@ionic/react';
 import {
   eyeOffSharp,
   eyeSharp,
@@ -13,17 +13,18 @@ import CircleLoader from '../CircleLoader';
 import styles from './Timer.module.scss';
 import SettingsModal from '../SettingsModal';
 
-enum TIMER_TYPE {
+export enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
   LONG_BREAK = 'LONG_BREAK',
   WORK = 'WORK',
   FINISHED = 'FINISHED'
 }
 
-import sound from '../../../resources/sound.mp3';
+// import sound from '../../../resources/sound.mp3';
+import TaskName from './TaskName';
 
 const Timer = () => {
-  const [audio, setAudio] = useState<HTMLAudioElement>(null);
+  // const [audio, setAudio] = useState<HTMLAudioElement>(null);
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
   const { workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning } =
     useContext(SettingsContext);
@@ -39,6 +40,7 @@ const Timer = () => {
   useEffect(() => {
     const handleTimerExpiration = () => {
       if (seconds === 0) {
+        console.log('one minute done // but initialy called');
         if (minutes === 0) {
           updateRoundsAndTimerType();
         } else {
@@ -63,6 +65,16 @@ const Timer = () => {
     reset();
   }, [workTime, shortBreakTime, longBreakTime, rounds]);
 
+  useEffect(() => {
+    const totalTimeInSeconds =
+      (timerType === TIMER_TYPE.WORK
+        ? workTime
+        : timerType === TIMER_TYPE.SHORT_BREAK
+          ? shortBreakTime
+          : longBreakTime) * 60;
+    setProgress((100 / totalTimeInSeconds) * (minutes * 60 + seconds));
+  }, [seconds, minutes, timerType, workTime, shortBreakTime, longBreakTime]);
+
   const updateRoundsAndTimerType = () => {
     let nextType = timerType;
     let nextRoundsLeft = roundsLeft;
@@ -82,6 +94,7 @@ const Timer = () => {
         nextRoundsLeft -= 1;
         break;
       case TIMER_TYPE.LONG_BREAK:
+        setShowToaster(true);
         nextRoundsLeft -= 1;
         nextType = TIMER_TYPE.FINISHED;
         break;
@@ -116,38 +129,16 @@ const Timer = () => {
     resetTimer(TIMER_TYPE.WORK);
   };
 
-  useEffect(() => {
-    const totalTimeInSeconds =
-      (timerType === TIMER_TYPE.WORK
-        ? workTime
-        : timerType === TIMER_TYPE.SHORT_BREAK
-          ? shortBreakTime
-          : longBreakTime) * 60;
-    setProgress((100 / totalTimeInSeconds) * (minutes * 60 + seconds));
-  }, [seconds, minutes, timerType, workTime, shortBreakTime, longBreakTime]);
-
-  const getTaskName = () => {
-    if (timerType === TIMER_TYPE.WORK) {
-      return 'Fokus';
-    }
-    if (timerType === TIMER_TYPE.FINISHED) {
-      setShowToaster(true);
-      return 'Du hast es geschafft 🎉';
-    }
-
-    return timerType;
-  };
-
-  const handleMusic = async () => {
-    if (!audio) {
-      const thisAudio = new Audio(sound);
-      setAudio(thisAudio);
-      await thisAudio.play();
-    } else {
-      audio.pause();
-      setAudio(null);
-    }
-  };
+  // const handleMusic = async () => {
+  //   if (!audio) {
+  //     const thisAudio = new Audio(sound);
+  //     setAudio(thisAudio);
+  //     await thisAudio.play();
+  //   } else {
+  //     audio.pause();
+  //     setAudio(null);
+  //   }
+  // };
 
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
@@ -160,15 +151,17 @@ const Timer = () => {
       {import.meta.env.VITE_ENV === 'DEV' ? (
         <button onClick={setNextRound}>Next Round</button>
       ) : null}
+      <button onClick={() => setShowToaster(true)}>show toast</button>
+
       <IonToast
         position={'top'}
         isOpen={showToaster}
-        message="This toast will close in 5 seconds"
+        message="Congratulations, you've successfully completed a pomodoro session! 🎉"
         onDidDismiss={() => setShowToaster(false)}
         duration={5000}
       />
       <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
-      <h1 className={styles.title}>{getTaskName()}</h1>
+      <TaskName timerType={timerType} />
       <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
 
       {/*<div className={styles.musicWrapper}>*/}
