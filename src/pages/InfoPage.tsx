@@ -86,32 +86,32 @@ const InfoPage: FC = () => {
               </IonList>
             </IonCol>
           </IonRow>
-          <IonRow>
-            <IonCol>
-              <div style={{ textAlign: 'center' }}>
-                <form action="https://www.paypal.com/donate" method="post" target="_top">
-                  <input type="hidden" name="hosted_button_id" value="C9WSX8C9EVR4Q" />
-                  <input
-                    type="image"
-                    src="https://pics.paypal.com/00/s/NzhhNzZlMjctYWQ5NC00NzMxLTg4ZmMtZGNiM2NmZmM2Yzg2/file.PNG"
-                    // @ts-ignore
-                    border="0"
-                    name="submit"
-                    title="PayPal - The safer, easier way to pay online!"
-                    alt="Donate with PayPal button"
-                  />
-                  <img
-                    alt=""
-                    // @ts-ignore
-                    border="0"
-                    src="https://www.paypal.com/en_DE/i/scr/pixel.gif"
-                    width="1"
-                    height="1"
-                  />
-                </form>
-              </div>
-            </IonCol>
-          </IonRow>
+          {/*<IonRow>*/}
+          {/*  <IonCol>*/}
+          {/*    <div style={{ textAlign: 'center' }}>*/}
+          {/*      <form action="https://www.paypal.com/donate" method="post" target="_top">*/}
+          {/*        <input type="hidden" name="hosted_button_id" value="C9WSX8C9EVR4Q" />*/}
+          {/*        <input*/}
+          {/*          type="image"*/}
+          {/*          src="https://pics.paypal.com/00/s/NzhhNzZlMjctYWQ5NC00NzMxLTg4ZmMtZGNiM2NmZmM2Yzg2/file.PNG"*/}
+          {/*          // @ts-ignore*/}
+          {/*          border="0"*/}
+          {/*          name="submit"*/}
+          {/*          title="PayPal - The safer, easier way to pay online!"*/}
+          {/*          alt="Donate with PayPal button"*/}
+          {/*        />*/}
+          {/*        <img*/}
+          {/*          alt=""*/}
+          {/*          // @ts-ignore*/}
+          {/*          border="0"*/}
+          {/*          src="https://www.paypal.com/en_DE/i/scr/pixel.gif"*/}
+          {/*          width="1"*/}
+          {/*          height="1"*/}
+          {/*        />*/}
+          {/*      </form>*/}
+          {/*    </div>*/}
+          {/*  </IonCol>*/}
+          {/*</IonRow>*/}
           <IonRow>
             <IonCol>
               <div style={{ textAlign: 'center' }}>

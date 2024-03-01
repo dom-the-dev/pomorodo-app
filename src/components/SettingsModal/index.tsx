@@ -53,8 +53,8 @@ const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<bo
   const saveSettings = () => {
     setRounds(localRounds);
     setWorkTime(localWorkTime);
-    setLongBreakTime(longBreakTime);
     setShortBreakTime(localShortBreakTime);
+    setLongBreakTime(localLongBreakTime);
   };
 
   return (
