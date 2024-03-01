@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SettingsContext from '../../context/Settings.context';
-import {IonButton, IonCheckbox, IonIcon, IonToast} from '@ionic/react';
+import { IonButton, IonCheckbox, IonIcon, IonToast } from '@ionic/react';
 import {
   eyeOffSharp,
   eyeSharp,
@@ -33,10 +33,8 @@ const Timer = () => {
   const [timerType, setTimerType] = useState<TIMER_TYPE>(TIMER_TYPE.WORK);
   const [progress, setProgress] = useState<number>(0);
   const [showTime, setShowTime] = useState<boolean>(true);
-  const [showToaster, setShowToaster] = useState<boolean>(false)
-const isProd = import.meta.env.VITE_LOCAL === "PRODUCTION";
-
-
+  const [showToaster, setShowToaster] = useState<boolean>(false);
+  const isProd = import.meta.env.VITE_ENV === 'PRODUCTION';
 
   // Consolidated useEffect for timer logic
   useEffect(() => {
@@ -72,7 +70,12 @@ const isProd = import.meta.env.VITE_LOCAL === "PRODUCTION";
 
     switch (timerType) {
       case TIMER_TYPE.WORK:
-        nextType = roundsLeft > 1 ? TIMER_TYPE.SHORT_BREAK : roundsLeft === 1 ? TIMER_TYPE.LONG_BREAK : TIMER_TYPE.FINISHED;
+        nextType =
+          roundsLeft > 1
+            ? TIMER_TYPE.SHORT_BREAK
+            : roundsLeft === 1
+              ? TIMER_TYPE.LONG_BREAK
+              : TIMER_TYPE.FINISHED;
         nextRoundsLeft = roundsLeft === 1 ? 0 : roundsLeft;
         break;
       case TIMER_TYPE.SHORT_BREAK:
@@ -150,31 +153,29 @@ const isProd = import.meta.env.VITE_LOCAL === "PRODUCTION";
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
-
   const setNextRound = () => {
-    setMinutes(0),
-        setSeconds(1)
-  }
+    setMinutes(0), setSeconds(1);
+  };
   return (
     <div className={styles.wrapper}>
       {!isProd ? <button onClick={setNextRound}>Next Round</button> : null}
       <IonToast
-          position={'top'}
-          isOpen={showToaster}
-          message="This toast will close in 5 seconds"
-          onDidDismiss={() => setShowToaster(false)}
-          duration={5000}
+        position={'top'}
+        isOpen={showToaster}
+        message="This toast will close in 5 seconds"
+        onDidDismiss={() => setShowToaster(false)}
+        duration={5000}
       />
       <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
       <h1 className={styles.title}>{getTaskName()}</h1>
       <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
 
-      <div className={styles.musicWrapper}>
-        {/*https://www.chosic.com/free-music/chill/?mixtag=beats*/}
-        <IonCheckbox onClick={handleMusic} labelPlacement="end">
-          Play music
-        </IonCheckbox>
-      </div>
+      {/*<div className={styles.musicWrapper}>*/}
+      {/*  /!*https://www.chosic.com/free-music/chill/?mixtag=beats*!/*/}
+      {/*  <IonCheckbox onClick={handleMusic} labelPlacement="end">*/}
+      {/*    Play music*/}
+      {/*  </IonCheckbox>*/}
+      {/*</div>*/}
 
       <div className={styles.timeWrapper}>
         <div className={styles.circle}>
