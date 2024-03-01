@@ -20,10 +20,11 @@ export enum TIMER_TYPE {
   FINISHED = 'FINISHED'
 }
 
-// import sound from '../../../resources/sound.mp3';
+import finishingSound from '../../../resources/finishing_bell.wav';
 import TaskName from './TaskName';
 
 const Timer = () => {
+  const fSound = new Audio(finishingSound);
   // const [audio, setAudio] = useState<HTMLAudioElement>(null);
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
   const { workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning } =
@@ -117,6 +118,7 @@ const Timer = () => {
         setMinutes(longBreakTime);
         break;
       case TIMER_TYPE.FINISHED:
+        fSound.play();
         reset();
     }
     setSeconds(0);
