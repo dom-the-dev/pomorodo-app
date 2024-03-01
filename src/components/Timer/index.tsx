@@ -34,7 +34,6 @@ const Timer = () => {
   const [progress, setProgress] = useState<number>(0);
   const [showTime, setShowTime] = useState<boolean>(true);
   const [showToaster, setShowToaster] = useState<boolean>(false);
-  const isProd = import.meta.env.VITE_ENV === 'PRODUCTION';
 
   // Consolidated useEffect for timer logic
   useEffect(() => {
@@ -158,7 +157,9 @@ const Timer = () => {
   };
   return (
     <div className={styles.wrapper}>
-      {!isProd ? <button onClick={setNextRound}>Next Round</button> : null}
+      {import.meta.env.VITE_ENV === 'DEV' ? (
+        <button onClick={setNextRound}>Next Round</button>
+      ) : null}
       <IonToast
         position={'top'}
         isOpen={showToaster}

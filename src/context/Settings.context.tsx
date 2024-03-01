@@ -14,13 +14,13 @@ const SettingsContext = createContext<{
   timerIsRunning: boolean;
   setTimerIsRunning: Dispatch<SetStateAction<boolean>>;
 }>({
-  rounds: 3,
+  rounds: null,
   setRounds: null,
-  workTime: 1,
+  workTime: null,
   setWorkTime: null,
-  shortBreakTime: 2,
+  shortBreakTime: null,
   setShortBreakTime: null,
-  longBreakTime: 3,
+  longBreakTime: null,
   setLongBreakTime: null,
   darkMode: false,
   setDarkMode: null,
