@@ -23,23 +23,6 @@ const InfoPage: FC = () => {
       </IonHeader>
       <IonContent color="light">
         <IonGrid className="ion-padding" fixed>
-          <IonGrid className="ion-padding">
-            <IonRow>
-              <IonCol>
-                <h1>Tomodoro</h1>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-          <IonList inset={true}>
-            <IonItem>
-              <IonLabel>By DOMINIKLAS</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonLabel>Version 1.0</IonLabel>
-            </IonItem>
-          </IonList>
-        </IonGrid>
-        <IonGrid className="ion-padding" fixed>
           <IonRow>
             <IonCol>
               <div style={{ textAlign: 'center' }}>
@@ -56,6 +39,64 @@ const InfoPage: FC = () => {
                 </p>
                 <p>🚀✨</p>
               </div>
+            </IonCol>
+          </IonRow>
+          <IonRow>
+            <IonCol>
+              <IonList inset={true}>
+                <IonItem>
+                  <IonLabel>
+                    <h3>Tomodoro</h3>
+                    <p>Name</p>
+                  </IonLabel>
+                </IonItem>
+                <IonItem>
+                  <IonLabel>
+                    <h3>domthedev</h3>
+                    <p>Developer</p>
+                  </IonLabel>
+                </IonItem>
+                <IonItem>
+                  <IonLabel>
+                    <h3>Nipkai</h3>
+                    <p>Developer</p>
+                  </IonLabel>
+                </IonItem>
+                <IonItem>
+                  <IonLabel>
+                    <IonLabel>
+                      <h3>0.1</h3>
+                      <p>Version</p>
+                    </IonLabel>
+                  </IonLabel>
+                </IonItem>
+                <IonItem>
+                  <IonLabel>
+                    <IonLabel>
+                      <a
+                        href="https://domthedev.com/tomodoro"
+                        rel={'noopener noreferrer'}
+                        target={'_blank'}>
+                        <h3>Link</h3>
+                      </a>
+                      <p>Terms of use</p>
+                    </IonLabel>
+                  </IonLabel>
+                </IonItem>
+                <IonItem>
+                  <IonLabel>
+                    <IonLabel>
+                      <a
+                        href="https://domthedev.com/tomodoro"
+                        rel={'noopener noreferrer'}
+                        target={'_blank'}>
+                        <h3>Link</h3>
+                      </a>
+                      <p>Privacy Policy</p>
+                    </IonLabel>
+                  </IonLabel>
+                </IonItem>
+              </IonList>
             </IonCol>
           </IonRow>
           <IonRow>
