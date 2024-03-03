@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import SettingsContext from '../../context/Settings.context';
+import SettingsContext from '../../../context/Settings.context';
 import { IonButton, IonIcon, IonToast } from '@ionic/react';
 import {
   eyeOffSharp,
@@ -9,9 +9,11 @@ import {
   refreshOutline,
   settingsOutline
 } from 'ionicons/icons';
-import CircleLoader from '../CircleLoader';
-import styles from './Timer.module.scss';
+import CircleLoader from '../../atoms/CircleLoader';
 import SettingsModal from '../SettingsModal';
+import TaskName from '../../atoms/TaskName';
+import finishingSound from '../../../../resources/finishing_bell.wav';
+import styles from './Timer.module.scss';
 
 export enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
@@ -19,9 +21,6 @@ export enum TIMER_TYPE {
   WORK = 'WORK',
   FINISHED = 'FINISHED'
 }
-
-import finishingSound from '../../../resources/finishing_bell.wav';
-import TaskName from './TaskName';
 
 const Timer = () => {
   const fSound = new Audio(finishingSound);
@@ -40,6 +39,11 @@ const Timer = () => {
   // Consolidated useEffect for timer logic
   useEffect(() => {
     const handleTimerExpiration = () => {
+      if (seconds === 1) {
+        // ring the bell after each round
+        fSound.play();
+      }
+
       if (seconds === 0) {
         console.log('one minute done // but initialy called');
         if (minutes === 0) {
@@ -118,7 +122,6 @@ const Timer = () => {
         setMinutes(longBreakTime);
         break;
       case TIMER_TYPE.FINISHED:
-        fSound.play();
         reset();
     }
     setSeconds(0);

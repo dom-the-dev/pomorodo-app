@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
-import { TIMER_TYPE } from '../index';
+import { TIMER_TYPE } from '../../organisms/Timer';
 
 const TaskName: FC<{ timerType: TIMER_TYPE }> = ({ timerType }) => {
   const [taskName, setTaskName] = useState<string>('');

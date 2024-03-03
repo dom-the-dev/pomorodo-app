@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { informationCircleOutline, stopwatchOutline } from 'ionicons/icons';
-import TomoDoro from './pages/TomoDoro';
+import TimerPage from './pages/TimerPage';
 import InfoPage from './pages/InfoPage';
 
 /* Core CSS required for Ionic components to work properly */
@@ -34,7 +34,7 @@ import '@ionic/react/css/display.css';
 import './theme/globals.scss';
 import './theme/variables.scss';
 import { FC } from 'react';
-import SettingsContextProvider from './provider/SettingsContextProvider.provider';
+import SettingsContextProvider from './context/SettingsContextProvider.provider';
 import { Redirect } from 'react-router';
 
 setupIonicReact();
@@ -46,7 +46,7 @@ const App: FC = () => (
         <IonTabs>
           <IonRouterOutlet>
             <Route exact path="/timer">
-              <TomoDoro />
+              <TimerPage />
             </Route>
             <Route exact path="/info">
               <InfoPage />

@@ -1,9 +1,9 @@
-import { IonContent, IonHeader, IonImg, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonHeader, IonImg, IonPage } from '@ionic/react';
 import { FC } from 'react';
-import Timer from '../components/Timer';
-import { IMAGES } from '../core/const/images';
+import Timer from '../components/organisms/Timer';
+import { IMAGES } from '../const/images';
 
-const TomoDoro: FC = () => {
+const TimerPage: FC = () => {
   return (
     <IonPage>
       <IonHeader>
@@ -16,4 +16,4 @@ const TomoDoro: FC = () => {
   );
 };
 
-export default TomoDoro;
+export default TimerPage;

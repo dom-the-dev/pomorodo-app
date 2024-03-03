@@ -14,7 +14,7 @@ import {
   IonToggle,
   IonToolbar
 } from '@ionic/react';
-import SettingsContext from '../../context/Settings.context';
+import SettingsContext from '../../../context/Settings.context';
 
 const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<boolean>> }> = ({
   isOpen,
