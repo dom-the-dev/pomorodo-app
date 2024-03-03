@@ -128,17 +128,32 @@ const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<bo
         </IonHeader>
         <IonContent color="light">
           <IonList inset={true}>
-            <IonItem onClick={() => openPicker(setLocalWorkTime, [5, 10, 15, 20], localWorkTime)}>
+            <IonItem
+              onClick={() =>
+                openPicker(
+                  setLocalWorkTime,
+                  [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60],
+                  localWorkTime
+                )
+              }>
               <IonLabel>Work Time in Minutes:</IonLabel>
               <IonBadge slot="end">{localWorkTime}</IonBadge>
             </IonItem>
             <IonItem
-              onClick={() => openPicker(setShortBreakTime, [5, 10, 15, 20], localShortBreakTime)}>
+              onClick={() =>
+                openPicker(setShortBreakTime, [5, 10, 15, 20, 25, 30], localShortBreakTime)
+              }>
               <IonLabel>Short Break Time in Minutes</IonLabel>
               <IonBadge slot="end">{localShortBreakTime}</IonBadge>
             </IonItem>
             <IonItem
-              onClick={() => openPicker(setLongBreakTime, [5, 10, 15, 20], localLongBreakTime)}>
+              onClick={() =>
+                openPicker(
+                  setLongBreakTime,
+                  [5, 10, 15, 20, 25, 30, 35, 40, 50, 55, 60],
+                  localLongBreakTime
+                )
+              }>
               <IonLabel>Long Break Time in Minutes</IonLabel>
               <IonBadge slot="end">{localLongBreakTime}</IonBadge>
             </IonItem>
