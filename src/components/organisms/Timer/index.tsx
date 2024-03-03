@@ -1,18 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SettingsContext from '../../../context/Settings.context';
 import { IonButton, IonIcon, IonToast } from '@ionic/react';
-import {
-  eyeOffSharp,
-  eyeSharp,
-  pauseOutline,
-  playOutline,
-  refreshOutline,
-  settingsOutline
-} from 'ionicons/icons';
+import { eyeOffSharp, eyeSharp } from 'ionicons/icons';
 import CircleLoader from '../../atoms/CircleLoader';
 import SettingsModal from '../SettingsModal';
 import TaskName from '../../atoms/TaskName';
-import finishingSound from '../../../../resources/finishing_bell.wav';
+import BREAK_SOUND from '../../../../resources/finishing_bell.wav';
+import WORK_SOUND from '../../../../resources/success.wav';
 import styles from './Timer.module.scss';
 import TimerControls from '../../molecules/TimerControls';
 
@@ -24,7 +18,8 @@ export enum TIMER_TYPE {
 }
 
 const Timer = () => {
-  const fSound = new Audio(finishingSound);
+  const breakSound = new Audio(BREAK_SOUND);
+  const workSound = new Audio(WORK_SOUND);
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
   const { workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning } =
     useContext(SettingsContext);
@@ -41,7 +36,11 @@ const Timer = () => {
     const handleTimerExpiration = () => {
       if (seconds === 1) {
         // ring the bell after each round
-        fSound.play();
+        if (timerType === TIMER_TYPE.WORK) {
+          workSound.play();
+        } else {
+          breakSound.play();
+        }
       }
 
       if (seconds === 0) {
