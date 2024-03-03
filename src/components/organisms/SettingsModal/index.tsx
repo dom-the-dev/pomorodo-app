@@ -3,15 +3,14 @@ import {
   IonAlert,
   IonButton,
   IonButtons,
-  IonCol,
   IonContent,
-  IonGrid,
   IonHeader,
+  IonItem,
+  IonLabel,
+  IonList,
   IonModal,
   IonRange,
-  IonRow,
   IonTitle,
-  IonToggle,
   IonToolbar
 } from '@ionic/react';
 import SettingsContext from '../../../context/Settings.context';
@@ -95,77 +94,82 @@ const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<bo
             </IonButtons>
           </IonToolbar>
         </IonHeader>
-        <IonContent className="ion-padding">
-          <IonGrid>
-            <IonRow>
-              <IonCol>
-                Work Time: {localWorkTime} Minutes <br />
-                <IonRange
-                  value={localWorkTime}
-                  snaps={true}
-                  step={5}
-                  min={5}
-                  max={60}
-                  pin={true}
-                  pinFormatter={(value: number) => `${value} Min.`}
-                  onIonChange={(e) => setLocalWorkTime(e.detail.value as number)}
-                />
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                Short Break Time: {localShortBreakTime} Minutes <br />
-                <IonRange
-                  value={localShortBreakTime}
-                  pin={true}
-                  snaps={true}
-                  step={5}
-                  min={5}
-                  max={30}
-                  pinFormatter={(value: number) => `${value} Min.`}
-                  onIonChange={(e) => setLocalShortBreakTime(e.detail.value as number)}
-                />
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                Long Break Time: {localLongBreakTime} Minutes <br />
-                <IonRange
-                  value={localLongBreakTime}
-                  ticks={true}
-                  pin={true}
-                  snaps={true}
-                  step={5}
-                  min={5}
-                  max={60}
-                  pinFormatter={(value: number) => `${value} Min.`}
-                  onIonChange={(e) => setLocalLongBreakTime(e.detail.value as number)}
-                />
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                Rounds: {localRounds}
-                <IonRange
-                  value={localRounds}
-                  pin={true}
-                  snaps={true}
-                  step={1}
-                  min={1}
-                  max={10}
-                  pinFormatter={(value: number) => `${value} Rounds`}
-                  onIonChange={(e) => setLocalRounds(e.detail.value as number)}
-                />
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonToggle disabled onIonChange={() => setDarkMode(!darkMode)} checked={darkMode}>
-                  Dark Mode
-                </IonToggle>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
+        <IonContent color="light">
+          <IonList inset={true}>
+            <IonItem>Work Time in Minutes: {localWorkTime}</IonItem>
+            <IonItem>
+              <IonRange
+                color={'secondary'}
+                value={localWorkTime}
+                snaps={true}
+                step={5}
+                min={5}
+                max={60}
+                pin={true}
+                pinFormatter={(value: number) => value}
+                onIonChange={(e) => setLocalWorkTime(e.detail.value as number)}
+              />
+            </IonItem>
+          </IonList>
+
+          <IonList inset={true}>
+            <IonItem>
+              <IonLabel>Short Break Time in Minutes: {localShortBreakTime}</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonRange
+                color={'secondary'}
+                value={localShortBreakTime}
+                pin={true}
+                snaps={true}
+                step={5}
+                min={5}
+                max={30}
+                pinFormatter={(value: number) => value}
+                onIonChange={(e) => setLocalShortBreakTime(e.detail.value as number)}
+              />
+            </IonItem>
+          </IonList>
+
+          <IonList inset={true}>
+            <IonItem>
+              <IonLabel>Long Break Time in Minutes: {localLongBreakTime}</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonRange
+                color={'secondary'}
+                value={localLongBreakTime}
+                ticks={true}
+                pin={true}
+                snaps={true}
+                step={5}
+                min={5}
+                max={60}
+                pinFormatter={(value: number) => value}
+                onIonChange={(e) => setLocalLongBreakTime(e.detail.value as number)}
+              />
+            </IonItem>
+          </IonList>
+
+          <IonList inset={true}>
+            <IonItem>
+              <IonLabel>Rounds: {localRounds}</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonRange
+                color={'secondary'}
+                value={localRounds}
+                pin={true}
+                snaps={true}
+                step={1}
+                min={1}
+                ticks={true}
+                max={10}
+                pinFormatter={(value: number) => value}
+                onIonChange={(e) => setLocalRounds(e.detail.value as number)}
+              />
+            </IonItem>
+          </IonList>
         </IonContent>
       </IonModal>
     </>
