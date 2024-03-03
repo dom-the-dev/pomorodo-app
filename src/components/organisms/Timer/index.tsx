@@ -34,17 +34,12 @@ const Timer = () => {
   // Consolidated useEffect for timer logic
   useEffect(() => {
     const handleTimerExpiration = () => {
-      if (seconds === 1) {
-        // ring the bell after each round
-        if (timerType === TIMER_TYPE.WORK) {
-          workSound.play();
-        } else {
-          breakSound.play();
-        }
+      if (seconds === 1 && minutes === 0) {
+        // Ring the bell after each round
+        timerType === TIMER_TYPE.WORK ? workSound.play() : breakSound.play();
       }
 
       if (seconds === 0) {
-        console.log('one minute done // but initialy called');
         if (minutes === 0) {
           updateRoundsAndTimerType();
         } else {
