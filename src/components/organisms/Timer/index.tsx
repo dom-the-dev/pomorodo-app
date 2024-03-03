@@ -14,6 +14,7 @@ import SettingsModal from '../SettingsModal';
 import TaskName from '../../atoms/TaskName';
 import finishingSound from '../../../../resources/finishing_bell.wav';
 import styles from './Timer.module.scss';
+import TimerControls from '../../molecules/TimerControls';
 
 export enum TIMER_TYPE {
   SHORT_BREAK = 'SHORT_BREAK',
@@ -24,7 +25,6 @@ export enum TIMER_TYPE {
 
 const Timer = () => {
   const fSound = new Audio(finishingSound);
-  // const [audio, setAudio] = useState<HTMLAudioElement>(null);
   const [settingsModalIsOpen, setSettingsModalIsOpen] = useState<boolean>(false);
   const { workTime, shortBreakTime, longBreakTime, rounds, timerIsRunning, setTimerIsRunning } =
     useContext(SettingsContext);
@@ -134,23 +134,14 @@ const Timer = () => {
     resetTimer(TIMER_TYPE.WORK);
   };
 
-  // const handleMusic = async () => {
-  //   if (!audio) {
-  //     const thisAudio = new Audio(sound);
-  //     setAudio(thisAudio);
-  //     await thisAudio.play();
-  //   } else {
-  //     audio.pause();
-  //     setAudio(null);
-  //   }
-  // };
-
   const timerMinutes = minutes < 10 ? `0${minutes}` : minutes.toString();
   const timerSeconds = seconds < 10 ? `0${seconds}` : seconds.toString();
 
   const setNextRound = () => {
-    setMinutes(0), setSeconds(1);
+    setMinutes(0);
+    setSeconds(1);
   };
+
   return (
     <div className={styles.wrapper}>
       {import.meta.env.VITE_ENV === 'DEV' ? (
@@ -164,16 +155,12 @@ const Timer = () => {
         onDidDismiss={() => setShowToaster(false)}
         duration={5000}
       />
-      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
-      <TaskName timerType={timerType} />
-      <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
 
-      {/*<div className={styles.musicWrapper}>*/}
-      {/*  /!*https://www.chosic.com/free-music/chill/?mixtag=beats*!/*/}
-      {/*  <IonCheckbox onClick={handleMusic} labelPlacement="end">*/}
-      {/*    Play music*/}
-      {/*  </IonCheckbox>*/}
-      {/*</div>*/}
+      <SettingsModal setIsOpen={setSettingsModalIsOpen} isOpen={settingsModalIsOpen} />
+
+      <TaskName timerType={timerType} />
+
+      <h5 className={styles.subTitle}>Rounds left: {roundsLeft}</h5>
 
       <div className={styles.timeWrapper}>
         <div className={styles.circle}>
@@ -200,33 +187,11 @@ const Timer = () => {
         </IonButton>
       </div>
 
-      <div className={styles.buttons}>
-        <IonButton
-          disabled={workTime === minutes && seconds === 0 && rounds === roundsLeft}
-          color="secondary"
-          onClick={reset}>
-          <span className="sr-only">reset</span>
-          <IonIcon aria-hidden="true" icon={refreshOutline} />
-        </IonButton>
-        <IonButton color="primary" onClick={() => setTimerIsRunning(!timerIsRunning)}>
-          {timerIsRunning ? (
-            <>
-              <IonIcon aria-hidden="true" icon={pauseOutline} />
-              <span className="sr-only">pause</span>
-            </>
-          ) : (
-            <>
-              <IonIcon aria-hidden="true" icon={playOutline} />
-              <span className="sr-only">play</span>
-            </>
-          )}
-        </IonButton>
-
-        <IonButton color="secondary" onClick={() => setSettingsModalIsOpen(!settingsModalIsOpen)}>
-          <span className="sr-only">settings</span>
-          <IonIcon aria-hidden="true" icon={settingsOutline} />
-        </IonButton>
-      </div>
+      <TimerControls
+        openSettingsModal={() => setSettingsModalIsOpen(true)}
+        reset={reset}
+        disabled={workTime === minutes && seconds === 0 && rounds === roundsLeft}
+      />
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { IMAGES } from '../const/images';
 const TimerPage: FC = () => {
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader className="ion-no-border">
         <IonImg style={{ height: 100 }} src={IMAGES.leaf.src} alt={IMAGES.leaf.alt} />
       </IonHeader>
       <IonContent fullscreen>
