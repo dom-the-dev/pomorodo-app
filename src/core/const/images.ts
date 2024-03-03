@@ -1,6 +1,6 @@
 export const IMAGES = {
   leaf: <iImage>{
-    src: 'leaf.png',
+    src: 'leaf.svg',
     alt: 'Green Leaf'
   }
 };
