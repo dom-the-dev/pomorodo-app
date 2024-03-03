@@ -1,6 +1,7 @@
 import React, { Dispatch, FC, FormEvent, SetStateAction, useContext, useState } from 'react';
 import {
   IonAlert,
+  IonBadge,
   IonButton,
   IonButtons,
   IonContent,
@@ -9,9 +10,9 @@ import {
   IonLabel,
   IonList,
   IonModal,
-  IonRange,
   IonTitle,
-  IonToolbar
+  IonToolbar,
+  useIonPicker
 } from '@ionic/react';
 import SettingsContext from '../../../context/Settings.context';
 
@@ -32,7 +33,7 @@ const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<bo
     setDarkMode,
     timerIsRunning
   } = useContext(SettingsContext);
-
+  const [present] = useIonPicker();
   const [localWorkTime, setLocalWorkTime] = useState<number>(workTime);
   const [localShortBreakTime, setLocalShortBreakTime] = useState<number>(shortBreakTime);
   const [localLongBreakTime, setLocalLongBreakTime] = useState<number>(longBreakTime);
@@ -54,6 +55,37 @@ const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<bo
     setWorkTime(localWorkTime);
     setShortBreakTime(localShortBreakTime);
     setLongBreakTime(localLongBreakTime);
+  };
+
+  const openPicker = async (
+    setState: Dispatch<SetStateAction<number>>,
+    values: any[],
+    selectedValue: number
+  ) => {
+    present({
+      columns: [
+        {
+          selectedIndex: values.indexOf(selectedValue),
+          name: 'languages',
+          options: values.map((value) => ({
+            text: `${value}`,
+            value: value
+          }))
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Confirm',
+          handler: (value) => {
+            setState(value.languages.value);
+          }
+        }
+      ]
+    });
   };
 
   return (
@@ -96,78 +128,26 @@ const SettingsModal: FC<{ isOpen: boolean; setIsOpen: Dispatch<SetStateAction<bo
         </IonHeader>
         <IonContent color="light">
           <IonList inset={true}>
-            <IonItem>Work Time in Minutes: {localWorkTime}</IonItem>
-            <IonItem>
-              <IonRange
-                color={'secondary'}
-                value={localWorkTime}
-                snaps={true}
-                step={5}
-                min={5}
-                max={60}
-                pin={true}
-                pinFormatter={(value: number) => value}
-                onIonChange={(e) => setLocalWorkTime(e.detail.value as number)}
-              />
+            <IonItem onClick={() => openPicker(setLocalWorkTime, [5, 10, 15, 20], localWorkTime)}>
+              <IonLabel>Work Time in Minutes:</IonLabel>
+              <IonBadge slot="end">{localWorkTime}</IonBadge>
             </IonItem>
-          </IonList>
-
-          <IonList inset={true}>
-            <IonItem>
-              <IonLabel>Short Break Time in Minutes: {localShortBreakTime}</IonLabel>
+            <IonItem
+              onClick={() => openPicker(setShortBreakTime, [5, 10, 15, 20], localShortBreakTime)}>
+              <IonLabel>Short Break Time in Minutes</IonLabel>
+              <IonBadge slot="end">{localShortBreakTime}</IonBadge>
             </IonItem>
-            <IonItem>
-              <IonRange
-                color={'secondary'}
-                value={localShortBreakTime}
-                pin={true}
-                snaps={true}
-                step={5}
-                min={5}
-                max={30}
-                pinFormatter={(value: number) => value}
-                onIonChange={(e) => setLocalShortBreakTime(e.detail.value as number)}
-              />
+            <IonItem
+              onClick={() => openPicker(setLongBreakTime, [5, 10, 15, 20], localLongBreakTime)}>
+              <IonLabel>Long Break Time in Minutes</IonLabel>
+              <IonBadge slot="end">{localLongBreakTime}</IonBadge>
             </IonItem>
-          </IonList>
-
-          <IonList inset={true}>
-            <IonItem>
-              <IonLabel>Long Break Time in Minutes: {localLongBreakTime}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonRange
-                color={'secondary'}
-                value={localLongBreakTime}
-                ticks={true}
-                pin={true}
-                snaps={true}
-                step={5}
-                min={5}
-                max={60}
-                pinFormatter={(value: number) => value}
-                onIonChange={(e) => setLocalLongBreakTime(e.detail.value as number)}
-              />
-            </IonItem>
-          </IonList>
-
-          <IonList inset={true}>
-            <IonItem>
-              <IonLabel>Rounds: {localRounds}</IonLabel>
-            </IonItem>
-            <IonItem>
-              <IonRange
-                color={'secondary'}
-                value={localRounds}
-                pin={true}
-                snaps={true}
-                step={1}
-                min={1}
-                ticks={true}
-                max={10}
-                pinFormatter={(value: number) => value}
-                onIonChange={(e) => setLocalRounds(e.detail.value as number)}
-              />
+            <IonItem
+              onClick={() =>
+                openPicker(setLocalRounds, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], localRounds)
+              }>
+              <IonLabel>Rounds</IonLabel>
+              <IonBadge slot="end">{localRounds}</IonBadge>
             </IonItem>
           </IonList>
         </IonContent>
