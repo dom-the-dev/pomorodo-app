@@ -6,7 +6,20 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     androidScheme: 'https'
-  }
+  },
+  ios: {
+    scheme: "App",
+  },
+  plugins: {
+    BackgroundRunner: {
+      label: 'com.tomodoro.app.check',
+      src: 'runner.js',
+      event: 'myCustomEvent',
+      repeat: true,
+      interval: 2,
+      autoStart: true,
+    },
+  },
 };
 
 export default config;
